@@ -175,6 +175,7 @@
                 Tedarikci: tedarikci
             };
             toplam += parseFloat(tutar);
+	    toFixed = toplam.toFixed(2);
             sepet.push(MasrafUrun);
             sayac++;
             $("#sepetici").empty();
@@ -182,7 +183,7 @@
                 var sepetitem = "<tr><td>" + item.Tedarikci + "</td><td>" + item.Aciklama + "</td><td>" + item.Tarih + "</td><td>" + item.Tutar + "</td><td><button  style='padding:0 10px 0 10px;' value=" + item.Sayac + " class='btn btn-danger'>Sil</button></td>";
                 $("#sepetici").append(sepetitem);
             })
-            $("#toplam").empty().append(toplam + "₺");
+            $("#toplam").empty().append(toFixed + "₺");
             $("#description").val("");
             $("#tedarikci").val("");
             $("#date").val("");
@@ -199,7 +200,7 @@
             $.post("/Home/MasrafGir",
                 {
                     sepet: sepet,
-                    toplam: toplam.toString()
+                    toplam: toFixed.toString()
                 },
                 function (data, status) {
                     if (status == "success") {
