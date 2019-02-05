@@ -1,0 +1,97 @@
+﻿@model IEnumerable<Portal_v1._0._1.Models.SepetGelen>
+@{
+    ViewBag.Title = "Sepet Görüntüle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Breadcrumbs-->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/Home/Index">Ana Sayfa</a>
+    </li>
+    <li class="breadcrumb-item active">Masraf Görüntüle</li>
+</ol>
+<!-- Example DataTables Card-->
+<div class="card border-primary mb-3">
+    <div class="card-header">
+        <i class="fa fa-table"></i> <strong class="custom-strong">Talep Edilen Masraflar</strong>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped" id="dataTable" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th class="custom-strong">Id</th>
+                        <th class="custom-strong">Ad Soyad</th>
+                        <th class="custom-strong">Açıklama</th>
+                        <th class="custom-strong">Toplam Tutar</th>
+                        <th class="custom-strong">Onay</th>
+                        <th class="custom-strong">Görüntüle</th>
+                        <th class="custom-strong">Sil</th>
+
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th class="custom-strong">Id</th>
+                        <th class="custom-strong">Ad Soyad</th>
+                        <th class="custom-strong">Açıklama</th>
+                        <th class="custom-strong">Toplam Tutar</th>
+                        <th class="custom-strong">Onay</th>
+                        <th class="custom-strong">Görüntüle</th>
+                        <th class="custom-strong">Sil</th>
+                  
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @if (Model.Count() == 0)
+                    {
+                        <tr>
+                            <td colspan="7" class="text-center bg-danger">Masraf talebi yok</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>@item.SepetId</td>
+                            <td>@item.Name @item.LastName</td>
+                            <td>@item.Aciklama</td>
+                            <td>@item.ToplamTutar ₺</td>
+                            @if (item.Onaylandi == true)
+                            {
+                                if (item.Odendi == true)
+                                {
+                                    <td><span class="badge badge-primary" style="padding:5px;">Ödendi</span></td>
+                                }
+                                else
+                                {
+                                    <td><span class="badge badge-success" style="padding:5px;">Onaylandı</span></td>
+                                }
+                                <td><a href="/Home/MasrafGoruntule/@item.SepetId.ToString()" class="btn btn-outline-custom-blue" style="padding:0 5px 0 5px;">Görüntüle</a></td>
+
+                            }
+                            else
+                            {
+                                <td><span class="badge badge-danger" style="padding:5px;">Onaylanmadı</span></td>
+                                <td><a href="/Home/MasrafGoruntule/@item.SepetId.ToString()" class="btn btn-outline-custom-blue" style="padding:0 5px 0 5px;">Görüntüle</a></td>
+                                <td class="custom-strong"><form action="/Home/MasrafSil/@item.SepetId" method="post">@Html.AntiForgeryToken()<button class="btn btn-outline-danger d-print-none" style="padding:0 5px 0 5px;">Sepeti Sil</button></form></td>
+
+                            }
+
+
+                            <td></td>
+
+
+
+                        </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer small text-muted">@DateTime.Now.Year</div>
+</div>
+
