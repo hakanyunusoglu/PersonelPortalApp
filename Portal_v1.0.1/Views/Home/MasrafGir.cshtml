@@ -128,6 +128,7 @@
         var sepet = [];
         var toplam = 0;
         var sayac = 0;
+        var parsedToplam = 0;
         $("#sepetEkle").on('click', function () {
             var aciklama = $("#description").val();
             var tutar = $("#price").val();
@@ -177,12 +178,20 @@
             toplam += parseFloat(tutar);
             sepet.push(MasrafUrun);
             sayac++;
+
+
             $("#sepetici").empty();
             sepet.forEach(function (item) {
                 var sepetitem = "<tr><td>" + item.Tedarikci + "</td><td>" + item.Aciklama + "</td><td>" + item.Tarih + "</td><td>" + item.Tutar + "</td><td><button  style='padding:0 10px 0 10px;' value=" + item.Sayac + " class='btn btn-danger'>Sil</button></td>";
                 $("#sepetici").append(sepetitem);
             })
-            $("#toplam").empty().append(toplam.toFixed(2) + "₺");
+
+            if (toplam % 1 == 0)
+                parsedToplam = toplam;
+            else {
+                parsedToplam = toplam.toFixed(2);
+            }
+            $("#toplam").empty().append(parsedToplam + "₺");
             $("#description").val("");
             $("#tedarikci").val("");
             $("#date").val("");
@@ -199,7 +208,7 @@
             $.post("/Home/MasrafGir",
                 {
                     sepet: sepet,
-                    toplam: toplam.toFixed(2).toString()
+                    toplam: parsedToplam.toString()
                 },
                 function (data, status) {
                     if (status == "success") {
@@ -224,10 +233,19 @@
                 if (sepet[i].Sayac == sira) {
                     toplam -= parseFloat(sepet[i].Tutar);
                     sepet.splice(i, 1);
+                    if (sepet.length == 0) {
+                        toplam = 0;
+                    }
                 }
             }
+            if (toplam % 1 == 0)
+                parsedToplam = toplam;
+            else {
+                parsedToplam = toplam.toFixed(2);
+            }
+
             $("#sepetici").empty();
-            $("#toplam").empty().append(toplam.toFixed(2) + "₺");
+            $("#toplam").empty().append(parsedToplam + "₺");
             sepet.forEach(function (item) {
                 var sepetitem = "<tr><td>" + item.Tedarikci + "</td><td>" + item.Aciklama + "</td><td>" + item.Tarih + "</td><td>" + item.Tutar + "</td><td><button  style='padding:0 10px 0 10px;' value=" + item.Sayac + " class='btn btn-danger'>Sil</button></td>";
                 $("#sepetici").append(sepetitem);
