@@ -135,10 +135,8 @@
     <Content Include="css\sb-admin.min.css" />
     <Content Include="Global.asax" />
     <Content Include="images\bg-login.jpg" />
-    <Content Include="images\loginBackground.jpg" />
     <Content Include="images\logo.png" />
     <Content Include="images\main-logo.png" />
-    <Content Include="images\network-3405376_1280.jpg" />
     <Content Include="js\fileinput.js" />
     <Content Include="js\jquery-ui.js" />
     <Content Include="js\sb-admin-charts.js" />
