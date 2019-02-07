@@ -179,17 +179,15 @@
             sepet.push(MasrafUrun);
             sayac++;
 
-
             $("#sepetici").empty();
             sepet.forEach(function (item) {
                 var sepetitem = "<tr><td>" + item.Tedarikci + "</td><td>" + item.Aciklama + "</td><td>" + item.Tarih + "</td><td>" + item.Tutar + "</td><td><button  style='padding:0 10px 0 10px;' value=" + item.Sayac + " class='btn btn-danger'>Sil</button></td>";
                 $("#sepetici").append(sepetitem);
             })
-
             if (toplam % 1 == 0)
                 parsedToplam = toplam;
             else {
-                parsedToplam = toplam.toFixed(2);
+                parsedToplam = parseFloat(toplam.toFixed(2));
             }
             $("#toplam").empty().append(parsedToplam + "₺");
             $("#description").val("");
@@ -233,17 +231,17 @@
                 if (sepet[i].Sayac == sira) {
                     toplam -= parseFloat(sepet[i].Tutar);
                     sepet.splice(i, 1);
-                    if (sepet.length == 0) {
-                        toplam = 0;
+             
+                    if (toplam % 1 == 0) {
+                        parsedToplam = parseInt(toplam);
+                    }   
+                    else{
+                        alert("parsefloat");
+                        parsedToplam = parseFloat(toplam.toFixed(2));
                     }
                 }
             }
-            if (toplam % 1 == 0)
-                parsedToplam = toplam;
-            else {
-                parsedToplam = toplam.toFixed(2);
-            }
-
+            
             $("#sepetici").empty();
             $("#toplam").empty().append(parsedToplam + "₺");
             sepet.forEach(function (item) {
