@@ -600,12 +600,12 @@ footer.sticky-footer {
 }
 
 .login-body {
-    background font-family: "Roboto", sans-serif;
-    height: 100%;
-    background-image: url('../images/bg-login.jpg' ); 
+    background-image: url('../images/bg-login.jpg' );
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-size: cover;
 }
+
 .field-validation-error {
     color: #ff0000;
     width: 100%;
