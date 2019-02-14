@@ -20,7 +20,6 @@
             <table class="table table-bordered table-striped" id="dataTable" cellspacing="0">
                 <thead>
                     <tr>
-                        <th class="custom-strong">Id</th>
                         <th class="custom-strong">Ad Soyad</th>
                         <th class="custom-strong">Açıklama</th>
                         <th class="custom-strong">Toplam Tutar</th>
@@ -32,7 +31,6 @@
                 </thead>
                 <tfoot>
                     <tr>
-                        <th class="custom-strong">Id</th>
                         <th class="custom-strong">Ad Soyad</th>
                         <th class="custom-strong">Açıklama</th>
                         <th class="custom-strong">Toplam Tutar</th>
@@ -46,7 +44,7 @@
                     @if (Model.Count() == 0)
                     {
                         <tr>
-                            <td colspan="7" class="text-center bg-danger">Masraf talebi yok</td>
+                            <td colspan="6" class="text-center bg-danger">Masraf talebi yok</td>
                         </tr>
                     }
                     else
@@ -54,7 +52,6 @@
                         foreach (var item in Model)
                         {
                         <tr>
-                            <td>@item.SepetId</td>
                             <td>@item.Name @item.LastName</td>
                             <td>@item.Aciklama</td>
                             <td>@item.ToplamTutar ₺</td>
@@ -76,12 +73,10 @@
                                 <td><span class="badge badge-danger" style="padding:5px;">Onaylanmadı</span></td>
                                 <td><a href="/Home/MasrafGoruntule/@item.SepetId.ToString()" class="btn btn-outline-custom-blue" style="padding:0 5px 0 5px;">Görüntüle</a></td>
                                 <td class="custom-strong"><form action="/Home/MasrafSil/@item.SepetId" method="post">@Html.AntiForgeryToken()<button class="btn btn-outline-danger d-print-none" style="padding:0 5px 0 5px;">Sepeti Sil</button></form></td>
-
                             }
 
 
-                            <td></td>
-
+                
 
 
                         </tr>

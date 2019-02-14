@@ -597,6 +597,7 @@ namespace Portal_v1._0._1.Controllers
                         yeni.PortalUserId = user.Id;
                         db.Raporlar.Add(yeni);
                         db.SaveChanges();
+                        file.SaveAs(path);
 
                         TempData["Success"] = "Rapor başarıyla kaydedildi";
 
