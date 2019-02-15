@@ -58,9 +58,20 @@
         </div>
         <div class="card-footer">
             <div class="btn-group float-md-right" role="group">
-                @Html.ActionLink("Onayla", "RaporOnay", new { id = Model.Id }, new { @class = "btn btn-outline-custom-blue float-right" })
-                @Html.ActionLink("Vazgeç", "Raporlar", null, new { @class = "btn btn-outline-warning float-right" })
-                @Html.ActionLink("Sil", "RaporSil", new { id = Model.Id }, new { @class = "btn btn-outline-danger float-right" })
+                @{
+                    if (Model.Onaylandi == true)
+                    {
+                        @Html.ActionLink("Sil", "RaporSil", new { id = Model.Id }, new { @class = "btn btn-outline-danger float-right" })
+                        @Html.ActionLink("Vazgeç", "Raporlar", null, new { @class = "btn btn-outline-warning float-right" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Onayla", "RaporOnay", new { id = Model.Id }, new { @class = "btn btn-outline-custom-blue float-right" })
+                        @Html.ActionLink("Vazgeç", "Raporlar", null, new { @class = "btn btn-outline-warning float-right" })
+                        @Html.ActionLink("Sil", "RaporSil", new { id = Model.Id }, new { @class = "btn btn-outline-danger float-right" })
+                    }
+                }
+
             </div>
 
         </div>
