@@ -591,6 +591,18 @@ namespace Portal_v1._0._1.Controllers
                         yeni.BaslangicTarihi = rapor.BaslangicTarihi;
                         yeni.BitisTarihi = rapor.BitisTarihi;
                         TimeSpan gunFarki = rapor.BitisTarihi.Subtract(rapor.BaslangicTarihi);
+                        //if (tetra.Contains("0"))
+                        //{
+                        //    tetra = tetra.Replace("0", "");
+                        //}
+                        //if (tetra.Contains(":"))
+                        //{
+                        //    tetra = tetra.Replace(":", "");
+                        //}
+                        //if (tetra.Contains("."))
+                        //{
+                        //    tetra = tetra.Replace(".", "");
+                        //}
                         yeni.RaporGun = gunFarki.ToString();
                         yeni.Onaylandi = false;
                         yeni.Resim = filename;

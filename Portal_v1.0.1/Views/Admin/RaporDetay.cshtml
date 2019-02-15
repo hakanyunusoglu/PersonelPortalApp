@@ -27,8 +27,30 @@
             <li class="list-group-item "><span class="custom-strong text-center ">Adı :</span> @Model.Name</li>
             <li class="list-group-item "><span class="custom-strong  text-center">Soyadı :</span> @Model.LastName</li>
             <li class="list-group-item "><span class="custom-strong text-center">Rapor Açıklaması :</span> @Model.RaporAciklama</li>
-            <li class="list-group-item "><span class="custom-strong text-center">Rapor Gün Sayısı:</span> @String.Format("{0: dd}", Model.RaporGun)</li>
-            <li class="list-group-item "> <span class="custom-strong text-center">Başlangıç Tarihi : </span>@String.Format("{0: MM/dd/yyyy}", Model.BaslangicTarihi)</li>
+            <li class="list-group-item " id="raporGun">
+                <span class="custom-strong text-center">Rapor Gün Sayısı:</span>
+
+                @{
+                    var raporGun = Model.RaporGun.ToString();
+
+                    if (raporGun.Contains("0"))
+                    {
+                        raporGun = raporGun.Replace("0", "");
+                    }
+                    if (raporGun.Contains(":"))
+                    {
+                        raporGun = raporGun.Replace(":", "");
+                    }
+                    if (raporGun.Contains("."))
+                    {
+                        raporGun = raporGun.Replace(".", "");
+                    }
+
+                }
+                @raporGun
+
+            </li>
+            <li class="list-group-item "> <span class="custom-strong text-center">Başlangıç Tarihi : </span>@String.Format("{0: dd/MM/yyyy}", Model.BaslangicTarihi)</li>
             <li class="list-group-item "> <span class="custom-strong text-center">Bitiş Tarihi : </span>@String.Format("{0:dd/MM/yyyy}", Model.BitisTarihi)</li>
             <li class="list-group-item"> <span class="custom-strong text-center">Rapor Linki : </span><a href="~/uploads/RaporPicture/@Model.Resim">Görüntüle</a></li>
             <li class="list-group-item "> <span class="custom-strong text-center">Onay : </span>@(Model.Onaylandi == true ? "Onaylandı" : "Onaylanmadı")</li>
@@ -44,5 +66,13 @@
         </div>
 
     </div>
+
+<script>
+    function myfunction() {Model
+        var raporGun = document.getElementById("raporGun").value;
+        console.log(raporGun);
+    }
+    myfunction();
+</script>
 
 
