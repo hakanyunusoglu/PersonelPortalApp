@@ -276,7 +276,7 @@ namespace Portal_v1._0._1.Controllers
 
             rapor.Onaylandi = true;
             db.SaveChanges();
-            TempData["Success"] = "Rapor Onayalandı !";
+            TempData["Success"] = "Rapor Onaylandı !";
             return RedirectToAction("Raporlar");
         }
 
