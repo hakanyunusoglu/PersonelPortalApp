@@ -250,6 +250,7 @@ namespace Portal_v1._0._1.Controllers
         {
             var user = db.Users.Single(i => i.UserName == HttpContext.User.Identity.Name);
             DateTime Calismadate = user.IseGiris;
+            
             TimeSpan subt = DateTime.Now.Subtract(Calismadate);
             int Calismagün = Convert.ToInt32(subt.TotalDays);
             int count = calismaYilHesapla(Calismagün);//toplam çalıştığı yılı hesaplıyor

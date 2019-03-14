@@ -26,6 +26,7 @@
                         <th class="custom-strong">Telefon</th>
                         <th class="custom-strong">E-Posta</th>
                         <th class="custom-strong">Lokasyon</th>
+                        <th class="custom-strong">İzin sayısı</th>
                         <th class="custom-strong">Görüntüle</th>
                     </tr>
                 </thead>
@@ -36,6 +37,7 @@
                         <th class="custom-strong">Telefon</th>
                         <th class="custom-strong">E-Posta</th>
                         <th class="custom-strong">Lokasyon</th>
+                        <th class="custom-strong">İzin sayısı</th>
                         <th class="custom-strong">Görüntüle</th>
                     </tr>
                 </tfoot>
@@ -48,19 +50,28 @@
                     }
                     else
                     {
+                        int index = 0;
                         foreach (var item in Model)
                         {
-                            <tr>
-                                <td>@item.Name @item.LastName</td>
-                                <td>@item.Title</td>
-                                <td>@item.PhoneNumber</td>
-                                <td>@item.Email</td>
-                                <td>@item.Address</td>
-                                <td>@Html.ActionLink("Görüntüle", "ShowUser", new { id = item.Id }, new { @class = "btn btn-outline-custom-blue btn-custom-padding" })</td>
-                            </tr>
+                        <tr>
+                            <td>@item.Name @item.LastName</td>
+                            <td>@item.Title</td>
+                            <td>@item.PhoneNumber</td>
+                            <td>@item.Email</td>
+                            <td>@item.Address</td>
+                            @if (ViewBag.kalan[index] < 0)
+	                        {
+		                    <td>0 Gün</td>
+                            }
+                            else
+                            { 
+                            <td>@ViewBag.kalan[index] Gün</td>
+                            }
+                            <td>@Html.ActionLink("Görüntüle", "ShowUser", new { id = item.Id }, new { @class = "btn btn-outline-custom-blue btn-custom-padding" })</td>
+                        </tr>
+                            index++;
                         }
                     }
-
                 </tbody>
             </table>
         </div>

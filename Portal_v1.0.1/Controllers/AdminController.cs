@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Portal_v1._0._1.Identity;
 using Portal_v1._0._1.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,6 +19,8 @@ namespace Portal_v1._0._1.Controllers
         private UserManager<PortalUser> userManager;
         private IdentityDataContext db = new IdentityDataContext();
         MailController mc = new MailController();
+        ArrayList myList = new ArrayList();
+        public Helper.IzinHakkiHesapla myClass = new Helper.IzinHakkiHesapla();
         public AdminController()
         {
             var userStore = new UserStore<PortalUser>(new IdentityDataContext());
@@ -27,6 +30,15 @@ namespace Portal_v1._0._1.Controllers
         // GET: Admin
         public ActionResult Index()
         {
+            var users = userManager.Users.Where(i => i.CiktiMi == false).ToList();
+            myList.Clear();
+            for (int x = 0; x < users.Count; x++)
+            {
+                var kalan = myClass.toplamIzinHakki(users[x].Id.ToString());
+                myList.Add(kalan);
+            }
+            ViewBag.kalan = myList;
+
             return View(userManager.Users.Where(i => i.CiktiMi == false));
         }
 
@@ -441,5 +453,7 @@ namespace Portal_v1._0._1.Controllers
             TempData["Success"] = "CV silindi !";
             return RedirectToAction("CVEkle");
         }
+
+        
     }
 }
