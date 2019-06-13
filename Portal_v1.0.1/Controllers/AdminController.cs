@@ -26,7 +26,7 @@ namespace Portal_v1._0._1.Controllers
             var userStore = new UserStore<PortalUser>(new IdentityDataContext());
             userManager = new UserManager<PortalUser>(userStore);
 
-        }
+    }
         // GET: Admin
         public ActionResult Index()
         {
@@ -40,6 +40,53 @@ namespace Portal_v1._0._1.Controllers
             ViewBag.kalan = myList;
 
             return View(userManager.Users.Where(i => i.CiktiMi == false));
+        }
+        public ActionResult KullaniciIzinEkle(IzinModel model)
+        {
+            ViewBag.izinListesi = IzinTurRepository.IzinTurListesi();
+            var users = userManager.Users.Where(i => i.CiktiMi == false)
+            .Select(s => new
+            {
+                Text = s.Name + " " + s.LastName,
+                Value = s.Id
+            }).ToList();
+
+            ViewBag.UserList3 = new SelectList(users, "Value", "Text");
+
+            if (ModelState.IsValid)
+            {
+                var yeni = new IzinModel();
+                yeni.PortalUserId = model.PortalUserId;
+                yeni.IzinTuru = model.IzinTuru;
+                yeni.IzinAciklama = model.IzinAciklama;
+                yeni.BaslangicTarihi = model.BaslangicTarihi;
+                yeni.BitisTarihi = model.BitisTarihi;
+                yeni.Onaylandi = true;
+
+                double gunSayi = 0;
+                string gun = string.Empty;
+
+                DateTime geciciTarih = model.BaslangicTarihi;
+                while (geciciTarih <= model.BitisTarihi) //haftasonlarını geçiyor
+                {
+                    gun = geciciTarih.ToString("dddd");
+                    if (gun != "Cumartesi" && gun != "Pazar")
+                    {
+                        gunSayi += 1;
+                    }
+                    geciciTarih = geciciTarih.AddDays(1);
+                }
+                yeni.IzinGun = gunSayi.ToString();
+
+                var result = db.Izinler.Add(yeni);
+                db.SaveChanges();
+                ViewData["Success"] = "İzin ekleme işlemi başarılı";
+            }
+            else
+            {
+                return View(model);
+            }
+            return View();
         }
 
         public ActionResult InactiveUsers()
@@ -315,10 +362,10 @@ namespace Portal_v1._0._1.Controllers
                 Tedarikci = db.MasrafUrunler.FirstOrDefault(x => x.MasrafSepetId == i.Id).Tedarikci,
                 Name = i.User.Name,
                 LastName = i.User.LastName,
-                Odendi =i.Odendi,
+                Odendi = i.Odendi,
                 Aciklama = db.MasrafUrunler.FirstOrDefault(x => x.MasrafSepetId == i.Id).Aciklama,
                 SepetId = i.Id
-            }); 
+            });
             return View(sepet.ToList());
         }
         public ActionResult MasrafGoruntule(int? id)
@@ -403,7 +450,7 @@ namespace Portal_v1._0._1.Controllers
 
         public ActionResult MasrafOdenenler()
         {
-            var sepet = db.MasrafSepetler.Where(i =>i.Odendi == true).Select(i => new SepetGelen()
+            var sepet = db.MasrafSepetler.Where(i => i.Odendi == true).Select(i => new SepetGelen()
             {
                 ToplamTutar = i.ToplamTutar,
                 Onaylandi = i.Onaylandi,
@@ -454,6 +501,6 @@ namespace Portal_v1._0._1.Controllers
             return RedirectToAction("CVEkle");
         }
 
-        
+
     }
 }

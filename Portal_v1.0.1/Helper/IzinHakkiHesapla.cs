@@ -88,6 +88,7 @@ namespace Portal_v1._0._1.Helper
                     kullanilanIzin = Convert.ToDouble(item.IzinGun) + kullanilanIzin; //veritabanından kullanıcının kullandığı izinlerin günlerini değişkene aktarıyor
                 }
             }
+
             var kalan = Convert.ToDouble(toplamIzınHakkı) - kullanilanIzin;
             //(Convert.ToDouble(toplamIzınHakkı) - (kullanilanIzin + gunSayi))
             return kalan;

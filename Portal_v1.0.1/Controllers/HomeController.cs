@@ -527,8 +527,6 @@ namespace Portal_v1._0._1.Controllers
                         var mesaj = String.Format("{0} kullanıcısı {3} nedeni ile {1} ve {2} tarihleri arasında yıllık izin talep etmektedir.", user.Name + " " + user.LastName, izin.BaslangicTarihi.ToLongDateString(), izin.BitisTarihi.ToLongDateString(), izin.IzinAciklama);
                         mc.MailGonderAsync(mesaj, "izin");
                     }
-                    
-
                 }
                 return View();
              
