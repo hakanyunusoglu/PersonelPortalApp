@@ -23,20 +23,22 @@ namespace Portal_v1._0._1.Controllers
         MailController mc = new MailController();
         public HomeController()
         {
+            //registry.Schedule<MyJob>().ToRunNow().AndEvery(7).Days();
             //ResmiTatilEkle(DateTime.Now);//Resmi tarihleri her sayfa açıldıgında kontrol ediyor eğer yılın ilk günü ve ayı ise resmi tarihleri güncellliyor
             roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new IdentityDataContext()));
             var userStore = new UserStore<PortalUser>(new IdentityDataContext());
             userManager = new UserManager<PortalUser>(userStore);
+            
         }
-        
+
         public ActionResult Index()
         {
             var user = userManager.Users.Single(i => i.UserName == HttpContext.User.Identity.Name);
             //user.Yonetici = userManager.Users.FirstOrDefault(i => i.Id == user.YoneticiId);
-
             return View(user);
 
         }
+      
         public ActionResult Kullanicilar()
         {
             return View(userManager.Users.Where(i => i.CiktiMi == false));

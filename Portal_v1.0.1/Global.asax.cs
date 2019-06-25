@@ -13,6 +13,7 @@ namespace Portal_v1._0._1
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            ScheduledTasks.ScheduledTaskExample.JobScheduler.Start();
         }
         protected void Application_Error(object sender, EventArgs e)
         {
