@@ -22,6 +22,7 @@ namespace Portal_v1._0._1.Identity
         public DbSet<ResmiTatiller> ResmiTatiller { get; set; }
         public DbSet<MasrafSepet> MasrafSepetler { get; set; }
         public DbSet<CVModel> CVler { get; set; }
+        public DbSet<BilgilendirmeModel> Bilgilendirme { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

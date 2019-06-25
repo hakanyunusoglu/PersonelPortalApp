@@ -208,6 +208,49 @@
                             </a>
                         </li>
                     }
+                }
+                @{ if (User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Bilgilendirme İşlemleri">
+                            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseBilgilendirme" data-parent="#exampleAccordion">
+                                <i class="fa fa-fw fa-link"></i>
+                                <span class="nav-link-text">Bilgilendirme İşlemleri</span>
+                            </a>
+                            <ul class="sidenav-second-level collapse" id="collapseBilgilendirme">
+                                <li>
+                                    <a class="nav-link" href="/Home/BilgilendirmeEkle">
+                                        <span class="nav-link-text">Bilgilendirme Ekle</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="nav-link" href="/Admin/Bilgilendirmeler">
+                                        <span class="nav-link-text">Bilgilendirme Goruntule</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Bilgilendirme İşlemleri">
+                            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseCV" data-parent="#exampleAccordion">
+                                <i class="fa fa-fw fa-link"></i>
+                                <span class="nav-link-text">Bilgilendirme İşlemleri</span>
+                            </a>
+                            <ul class="sidenav-second-level collapse" id="collapseCV">
+                                <li>
+                                    <a class="nav-link" href="/Home/BilgilendirmeEkle">
+                                        <span class="nav-link-text">Bilgilendirme Ekle</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="nav-link" href="/Home/BilgilendirmeGoruntule">
+                                        <span class="nav-link-text">Bilgilendirme Goruntule</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
 
                 }
             </ul>

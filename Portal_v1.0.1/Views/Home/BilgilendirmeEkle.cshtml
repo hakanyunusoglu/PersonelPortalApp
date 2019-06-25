@@ -1,0 +1,62 @@
+﻿@model Portal_v1._0._1.Models.BilgilendirmeModel
+@{
+    ViewBag.Title = "BilgilendirmeEkle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="Index">Ana Sayfa</a>
+    </li>
+    <li class="breadcrumb-item active">Bilgilendirme Ekle</li>
+</ol>
+
+<div class="content">
+
+    @if (ViewData["Warning"] != null)
+    {
+        <div class="alert alert-warning">
+            @ViewData["Warning"]
+        </div>
+    }
+    @if (ViewData["Success"] != null)
+    {
+        <div class="alert alert-success">
+            @ViewData["Success"]
+        </div>
+    }
+
+    <div class="col">
+        <div class="card border-primary mb-3">
+            <div class="card-header">
+                <i class="fa fa-table"></i> <strong class="custom-strong">Yeni Bilgilendirme</strong>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="col-md-12">
+                        <div class="mt-1">
+                            <strong class="custom-strong">Açıklama</strong>
+                            @Html.TextAreaFor(i => i.Description, new { @class = "form-control", @style = "height: 108px;" })
+                            @Html.ValidationMessageFor(i => i.Description)
+                        </div>
+
+                    </div>
+                    <br />
+                    <div class="col-md-4">
+                        <strong class="custom-strong">Tarih</strong>
+                        @Html.TextBoxFor(i => i.Date,
+              new { @type = "date", @class = "form-control" })
+                        @Html.ValidationMessageFor(i => i.Date)
+
+                    </div>
+                    <button style="margin-top:20px;" id="submit" type="submit" class="float-right btn btn-custom-blue">Bilgilendirme Ekle</button>
+                }
+            </div>
+            <div class="card-footer small text-muted float-right">@DateTime.Now.Year</div>
+        </div>
+    </div>
+</div>
+

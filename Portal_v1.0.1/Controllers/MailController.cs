@@ -27,6 +27,10 @@ namespace Portal_v1._0._1.Controllers
                 {
                     message.To.Add(new MailAddress(ConfigurationManager.AppSettings["PortalMasrafMailAdres"]));
                 }
+                else if (key == "bilgilendirme")
+                {
+                    message.To.Add(new MailAddress(ConfigurationManager.AppSettings["PortalBilgilendirmeMailAdres"]));
+                }
                 else
                 {
                     message.To.Add(new MailAddress(key));

@@ -28,7 +28,7 @@ namespace Portal_v1._0._1.Controllers
             var userStore = new UserStore<PortalUser>(new IdentityDataContext());
             userManager = new UserManager<PortalUser>(userStore);
         }
-
+        
         public ActionResult Index()
         {
             var user = userManager.Users.Single(i => i.UserName == HttpContext.User.Identity.Name);
@@ -529,14 +529,11 @@ namespace Portal_v1._0._1.Controllers
                     }
                 }
                 return View();
-             
             }
             else
             {
-
                 return View(izin);
             }
-
         }
 
         public ActionResult IzinGoruntule()
@@ -559,7 +556,6 @@ namespace Portal_v1._0._1.Controllers
         }
         public ActionResult RaporGir()
         {
-
             return View();
         }
 
@@ -582,9 +578,7 @@ namespace Portal_v1._0._1.Controllers
                         var randomfilename = Path.GetFileNameWithoutExtension(file.FileName) + "_" + Path.GetRandomFileName();
                         var filename = Path.ChangeExtension(randomfilename, extension);
                         var path = Path.Combine(folder, filename);
-
                         var user = userManager.Users.Single(i => i.UserName == HttpContext.User.Identity.Name);
-                       
                         var yeni = new RaporModel();
                         yeni.RaporAciklama = rapor.RaporAciklama;
                         yeni.BaslangicTarihi = rapor.BaslangicTarihi;
@@ -602,13 +596,11 @@ namespace Portal_v1._0._1.Controllers
 
                         var mesaj = String.Format("{0} kullanıcısı {3} nedeni ile {1} ve {2} tarihleri arasında rapor girdi", user.Name + " " + user.LastName, rapor.BaslangicTarihi.ToLongDateString(), rapor.BitisTarihi.ToLongDateString(), rapor.RaporAciklama);
                         mc.MailGonderAsync(mesaj, "izin");
-
                     }
                     else
                     {
                         TempData["message"] = "Gönderdiğiniz dosyanın uzantısı .pdf, .docx, .jpg, .jpeg, .png veya .doc olmalıdır";
                     }
-
                 }
                 else
                 {
@@ -622,7 +614,6 @@ namespace Portal_v1._0._1.Controllers
                 {
                     return View();
                 }
-
             }
             else
             {
@@ -644,7 +635,6 @@ namespace Portal_v1._0._1.Controllers
                 Onaylandi = i.Onaylandi,
                 Id = i.Id
             });
-
             return View(raporlar);
         }
 
@@ -715,7 +705,6 @@ namespace Portal_v1._0._1.Controllers
             return RedirectToAction("SepetGoruntule");
         }
 
-
         [HttpPost]
         public ActionResult MasrafGir(List<MasrafGelen> sepet, string toplam)
         {
@@ -741,14 +730,9 @@ namespace Portal_v1._0._1.Controllers
             }
             db.SaveChanges();
             
-            
-        
             var mesaj = String.Format("{0} kullanıcısı toplam {1} ₺ tutarında masraf girdi. Açıklama : {2}", user.Name + " " + user.LastName, toplam, sepet[0].Aciklama);
             mc.MailGonderAsync(mesaj, "masraf");
             return View();
-            
-
-
         }
 
         public ActionResult SepetGoruntule()
@@ -779,13 +763,51 @@ namespace Portal_v1._0._1.Controllers
             return View(masraflar);
         }
 
- 
+        public ActionResult BilgilendirmeEkle()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult BilgilendirmeEkle(BilgilendirmeModel model)
+        {
+            var user = userManager.Users.Single(i => i.UserName == HttpContext.User.Identity.Name);
+            BilgilendirmeModel yeni = new BilgilendirmeModel();
+            yeni.Description = model.Description;
+            yeni.Date = model.Date;
+            yeni.PortalUserId = user.Id;
+            db.Bilgilendirme.Add(yeni);
+            db.SaveChanges();
+            TempData["Success"] = "Bilgilendirme kaydedildi";
+
+            var mesaj = String.Format("{0} isimli kullanıcı {1} tarihinde {2} açıklamalı bilgilendirme eklemiştir.", user.Name + user.LastName, model.Date, model.Description);
+            mc.MailGonderAsync(mesaj, "bilgilendirme");
+            return View();
+        }
+
+        public ActionResult BilgilendirmeGoruntule()
+        {
+            var user = userManager.Users.Single(i => i.UserName == HttpContext.User.Identity.Name);
+            var bilgilendirmeler = db.Bilgilendirme.Where(i => i.PortalUserId == user.Id).Select(i => new BilgilendirmeGelen()
+            {
+                Name = i.User.Name,
+                LastName = i.User.LastName,
+                BilgilendirmeAciklama = i.Description,
+                Tarih = i.Date,
+                Id = i.Id
+            });
+            return View(bilgilendirmeler);
+        }
+
+
         public ActionResult CVEkle()
         {
             var user = userManager.Users.Single(i => i.UserName == HttpContext.User.Identity.Name);
             var cvler = db.CVler.Where(i => i.PortalUserId == user.Id);
             return View(cvler);
         }
+
+
 
         [HttpPost]
         public ActionResult CVEkle(HttpPostedFileBase file)

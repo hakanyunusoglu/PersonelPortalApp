@@ -196,6 +196,7 @@
     <Compile Include="Identity\PortalUser.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CVModel.cs" />
+    <Compile Include="Models\BilgilendirmeModel.cs" />
     <Compile Include="Models\izinModel.cs" />
     <Compile Include="Models\Masraf.cs" />
     <Compile Include="Models\UserModel.cs" />
@@ -285,6 +286,9 @@
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Admin\PasswordReset.cshtml" />
     <Content Include="Views\Admin\KullaniciIzinEkle.cshtml" />
+    <Content Include="Views\Home\BilgilendirmeEkle.cshtml" />
+    <Content Include="Views\Home\BilgilendirmeGoruntule.cshtml" />
+    <Content Include="Views\Admin\Bilgilendirmeler.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

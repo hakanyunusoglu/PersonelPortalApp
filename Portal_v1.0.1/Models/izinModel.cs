@@ -12,7 +12,6 @@ namespace Portal_v1._0._1.Models
     {
         public int Id { get; set; }
 
-
         [Required]
         [Display(Name ="İzin Türü")]
         public string IzinTuru { get; set; }
@@ -33,7 +32,6 @@ namespace Portal_v1._0._1.Models
         public string PortalUserId { get; set; }
         public PortalUser User { get; set; }
 
-
     }
     public class IzinGelen
     {
@@ -47,7 +45,6 @@ namespace Portal_v1._0._1.Models
 
         public string Name { get; set; }
         public string LastName { get; set; }
-
 
     }
 

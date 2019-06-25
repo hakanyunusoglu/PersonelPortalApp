@@ -295,6 +295,20 @@ namespace Portal_v1._0._1.Controllers
             return View(raporlar);
         }
 
+        public ActionResult Bilgilendirmeler()
+        {
+            var bilgilendirmeler = db.Bilgilendirme.Select(i => new BilgilendirmeGelen()
+            {
+                Id = i.Id,
+                Name = i.User.Name,
+                LastName = i.User.LastName,
+                Tarih = i.Date,
+                BilgilendirmeAciklama = i.Description,
+            });
+
+            return View(bilgilendirmeler);
+        }
+
         public ActionResult RaporDetay(int? id)
         {
             if (String.IsNullOrEmpty(id.ToString()))
