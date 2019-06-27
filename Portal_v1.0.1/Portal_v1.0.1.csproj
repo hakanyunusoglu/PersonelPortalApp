@@ -306,6 +306,7 @@
     <Content Include="Views\Home\BilgilendirmeEkle.cshtml" />
     <Content Include="Views\Home\BilgilendirmeGoruntule.cshtml" />
     <Content Include="Views\Admin\Bilgilendirmeler.cshtml" />
+    <Content Include="Views\Admin\GenelBilgilendirmeler.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -309,6 +309,39 @@ namespace Portal_v1._0._1.Controllers
             return View(bilgilendirmeler);
         }
 
+        public ActionResult GenelBilgilendirmeler()
+        {
+            var bilgilendirmeler = db.BilgilendirmeGenel.Select(i => new BilgilendirmeGelen()
+            {
+                Id = i.Id,
+                Name = i.User.Name,
+                LastName = i.User.LastName,
+                Tarih = i.Date,
+                BilgilendirmeAciklama = i.Description,
+            });
+
+            return View(bilgilendirmeler);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult BilgilendirmeSil(int? id)
+        {
+            if (id == null)
+            {
+                TempData["Hata"] = "Gösterilecek Bilgilendirme Bulunamadı !";
+                return Redirect("/hata/404");
+            }
+
+            var silinecek = db.BilgilendirmeGenel.FirstOrDefault(i => i.Id == id);
+            db.BilgilendirmeGenel.Remove(silinecek);
+            db.SaveChanges();
+
+            TempData["Success"] = "Bilgilendirme silindi !";
+            return RedirectToAction("GenelBilgilendirmeler");
+
+        }
+
         public ActionResult RaporDetay(int? id)
         {
             if (String.IsNullOrEmpty(id.ToString()))

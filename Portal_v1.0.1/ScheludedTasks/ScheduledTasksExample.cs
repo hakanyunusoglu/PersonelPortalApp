@@ -12,13 +12,14 @@ namespace ScheduledTasks.ScheduledTaskExample
             IScheduler scheduler = StdSchedulerFactory.GetDefaultScheduler();
             scheduler.Start();
             var scheludeValue = "0 " + Convert.ToString(ConfigurationManager.AppSettings["Minute"]) +" " + Convert.ToString(ConfigurationManager.AppSettings["Hour"]) + " " + "? * "+ Convert.ToString(ConfigurationManager.AppSettings["DayOfWeek"]);
-            Convert.ToString(ConfigurationManager.AppSettings["Hour"]);
 
             IJobDetail job = JobBuilder.Create<ScheduledTasks.EmailTest.EmailJob>().Build();
 
             ITrigger trigger = TriggerBuilder.Create()
             .WithIdentity("trigger1", "group1")
-            .WithSchedule(CronScheduleBuilder.CronSchedule(scheludeValue)).Build();
+            .WithSchedule(CronScheduleBuilder.CronSchedule(scheludeValue)
+            ).Build();
+
 
             scheduler.ScheduleJob(job, trigger);
         }

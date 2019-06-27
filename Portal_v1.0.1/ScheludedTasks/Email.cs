@@ -52,27 +52,29 @@ namespace ScheduledTasks.EmailTest
                 //save the excel to the stream
                 ms = new MemoryStream(package.GetAsByteArray());
             }
-            using (var message = new MailMessage(ConfigurationManager.AppSettings["PortalZamanliBilgilendirmeMailAdres"], ConfigurationManager.AppSettings["PortalZamanliBilgilendirmeMailAdres"]))
+            var message = new MailMessage();
+            message.To.Add(new MailAddress(ConfigurationManager.AppSettings["PortalZamanliBilgilendirmeMailAdres"]));
+            message.From = new MailAddress(ConfigurationManager.AppSettings["GonderenMail"]);  // replace with valid value
+            message.Attachments.Add(new Attachment(ms, string.Format("{0} Rapor.xlsx", "asd"), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"));
+            message.Subject = "Portal Mesajı";
+            SmtpClient smtpClient = new SmtpClient();
+            message.Body = "Portal Haftalık Raporlama";
+            message.IsBodyHtml = true;
+
+            using (var smtp = new SmtpClient())
             {
-                message.Subject = "Haftalık Bilgilendirme raporu";
-                message.Attachments.Add(new Attachment(ms, string.Format("{0} Rapor.xlsx","asd"), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"));
-                message.Body = "Rapor ektedir.";
-                message.IsBodyHtml = true;
-                using (var smtp = new SmtpClient())
+                var credential = new NetworkCredential
                 {
-                    var credential = new NetworkCredential
-                    {
-                        UserName = ConfigurationManager.AppSettings["GonderenMail"],
-                        Password = ConfigurationManager.AppSettings["GonderenMailSifre"]
-                    };
-                    smtp.Credentials = credential;
-                    smtp.Host = ConfigurationManager.AppSettings["SmtpHost"];
-                    smtp.Port = Convert.ToInt32(ConfigurationManager.AppSettings["SmtpPort"]);
-                    smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["SmtpSsl"]);
-                    smtp.Send(message);
-                }
+                    UserName = ConfigurationManager.AppSettings["GonderenMail"],
+                    Password = ConfigurationManager.AppSettings["GonderenMailSifre"]
+                };
+                smtp.Credentials = credential;
+                smtp.Host = ConfigurationManager.AppSettings["SmtpHost"];
+                smtp.Port = Convert.ToInt32(ConfigurationManager.AppSettings["SmtpPort"]);
+                smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["SmtpSsl"]);
+                smtp.Send(message);
             }
-            
-            }
+
+        }
         }
     }

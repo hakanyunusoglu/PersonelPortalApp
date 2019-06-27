@@ -778,10 +778,15 @@ namespace Portal_v1._0._1.Controllers
             yeni.Description = model.Description;
             yeni.Date = model.Date;
             yeni.PortalUserId = user.Id;
+
+            BilgilendirmeModelGenel yeniGenel = new BilgilendirmeModelGenel();
+            yeniGenel.Description = model.Description;
+            yeniGenel.Date = model.Date;
+            yeniGenel.PortalUserId = user.Id;
             db.Bilgilendirme.Add(yeni);
+            db.BilgilendirmeGenel.Add(yeniGenel);
             db.SaveChanges();
             TempData["Success"] = "Bilgilendirme kaydedildi";
-
             var mesaj = String.Format("{0} isimli kullanıcı {1} tarihinde {2} açıklamalı bilgilendirme eklemiştir.", user.Name + user.LastName, model.Date, model.Description);
             mc.MailGonderAsync(mesaj, "bilgilendirme");
             return View();

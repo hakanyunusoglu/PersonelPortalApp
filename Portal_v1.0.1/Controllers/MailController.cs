@@ -56,5 +56,30 @@ namespace Portal_v1._0._1.Controllers
                 }
             }
         }
+
+        public void ScheduledMail()
+        {
+                var message = new MailMessage();
+                message.To.Add(new MailAddress(ConfigurationManager.AppSettings["PortalBilgilendirmeMailAdres"]));
+                message.From = new MailAddress(ConfigurationManager.AppSettings["GonderenMail"]);  // replace with valid value
+                message.Subject = "Portal Mesajı";
+                SmtpClient smtpClient = new SmtpClient();
+                message.Body = "Portal Haftalık Raporlama";
+                message.IsBodyHtml = true;
+
+                using (var smtp = new SmtpClient())
+                {
+                    var credential = new NetworkCredential
+                    {
+                        UserName = ConfigurationManager.AppSettings["GonderenMail"],
+                        Password = ConfigurationManager.AppSettings["GonderenMailSifre"]
+                    };
+                    smtp.Credentials = credential;
+                    smtp.Host = ConfigurationManager.AppSettings["SmtpHost"];
+                    smtp.Port = Convert.ToInt32(ConfigurationManager.AppSettings["SmtpPort"]);
+                    smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["SmtpSsl"]);
+                    smtp.Send(message);
+                }
+            }
+        }
     }
-}
