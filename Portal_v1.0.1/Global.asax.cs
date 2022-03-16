@@ -20,7 +20,7 @@ namespace Portal_v1._0._1
             Exception ex = Server.GetLastError();
             if (ex is HttpException && ((HttpException)ex).GetHttpCode() == 404)
             {
-                Response.Redirect("hata/404");
+                Response.Redirect("/Error/Page404");
             }
         }
     }

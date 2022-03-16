@@ -2,9 +2,11 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using Portal_v1._0._1.Identity;
 using Portal_v1._0._1.Models;
+using Portal_v1._0._1.ViewModels;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -99,7 +101,7 @@ namespace Portal_v1._0._1.Controllers
             if (String.IsNullOrEmpty(id))
             {
                 TempData["Hata"] = "Gösterilecek Kullanıcı Bulunamadı !";
-                return Redirect("/hata/404");
+                return Redirect("/Error/Page404");
             }
 
             var user = userManager.Users.FirstOrDefault(i => i.Id == id);
@@ -112,7 +114,7 @@ namespace Portal_v1._0._1.Controllers
             if (String.IsNullOrEmpty(id))
             {
                 TempData["Hata"] = "Gösterilecek Kullanıcı Bulunamadı !";
-                return Redirect("/hata/404");
+                return Redirect("/Error/Page404");
             }
 
             var user = userManager.Users.FirstOrDefault(i => i.Id == id);
@@ -218,7 +220,7 @@ namespace Portal_v1._0._1.Controllers
             if (String.IsNullOrEmpty(id.ToString()))
             {
                 TempData["Hata"] = "Gösterilecek Kullanıcı Bulunamadı !";
-                return Redirect("/hata/404");
+                return Redirect("/Error/Page404");
             }
             var izin = db.Izinler.Where(i => i.Id == id).Select(i => new IzinGelen()
             {
@@ -242,7 +244,7 @@ namespace Portal_v1._0._1.Controllers
             if (id == null)
             {
                 TempData["Hata"] = "Gösterilecek Kullanıcı Bulunamadı !";
-                return Redirect("/hata/404");
+                return Redirect("/Error/Page404");
             }
             var izin = db.Izinler.FirstOrDefault(i => i.Id == id);
             var user = userManager.Users.FirstOrDefault(i => i.Id == izin.PortalUserId);
@@ -265,7 +267,7 @@ namespace Portal_v1._0._1.Controllers
             if (id == null)
             {
                 TempData["Hata"] = "Gösterilecek Kullanıcı Bulunamadı !";
-                return Redirect("/hata/404");
+                return Redirect("/Error/Page404");
             }
             var izin = db.Izinler.FirstOrDefault(i => i.Id == id);
             if (izin != null)
@@ -330,7 +332,7 @@ namespace Portal_v1._0._1.Controllers
             if (id == null)
             {
                 TempData["Hata"] = "Gösterilecek Bilgilendirme Bulunamadı !";
-                return Redirect("/hata/404");
+                return Redirect("/Error/Page404");
             }
 
             var silinecek = db.BilgilendirmeGenel.FirstOrDefault(i => i.Id == id);
@@ -347,7 +349,7 @@ namespace Portal_v1._0._1.Controllers
             if (String.IsNullOrEmpty(id.ToString()))
             {
                 TempData["Hata"] = "Gösterilecek Kullanıcı Bulunamadı !";
-                return Redirect("/hata/404");
+                return Redirect("/Error/Page404");
             }
             var rapor = db.Raporlar.Where(i => i.Id == id).Select(a => new RaporGelen
             {
@@ -372,7 +374,7 @@ namespace Portal_v1._0._1.Controllers
             if (String.IsNullOrEmpty(id.ToString()))
             {
                 TempData["Hata"] = "Gösterilecek Kullanıcı Bulunamadı !";
-                return Redirect("/hata/404");
+                return Redirect("/Error/Page404");
             }
             var rapor = db.Raporlar.FirstOrDefault(i => i.Id == id);
             var user = userManager.Users.FirstOrDefault(i => i.Id == rapor.PortalUserId);
@@ -391,7 +393,7 @@ namespace Portal_v1._0._1.Controllers
             if (String.IsNullOrEmpty(id.ToString()))
             {
                 TempData["Hata"] = "Gösterilecek Kullanıcı Bulunamadı !";
-                return Redirect("/hata/404");
+                return Redirect("/Error/Page404");
             }
             var rapor = db.Raporlar.FirstOrDefault(i => i.Id == id);
             db.Raporlar.Remove(rapor);
@@ -420,7 +422,7 @@ namespace Portal_v1._0._1.Controllers
             if (String.IsNullOrEmpty(id.ToString()))
             {
                 TempData["Hata"] = "Gösterilecek Kullanıcı Bulunamadı !";
-                return Redirect("/hata/404");
+                return Redirect("/Error/Page404");
             }
             var masraflar = db.MasrafUrunler.Where(i => i.MasrafSepetId == id);
             var _sepet = db.MasrafSepetler.FirstOrDefault(i => i.Id == id);
@@ -436,7 +438,7 @@ namespace Portal_v1._0._1.Controllers
             if (id == null)
             {
                 TempData["Hata"] = "Gösterilecek Kullanıcı Bulunamadı !";
-                return Redirect("/hata/404");
+                return Redirect("/Error/Page404");
             }
             var sepet = db.MasrafSepetler.FirstOrDefault(i => i.Id == id);
             var user = userManager.Users.FirstOrDefault(i => i.Id == sepet.PortalUserId);
@@ -457,7 +459,7 @@ namespace Portal_v1._0._1.Controllers
             if (id == null)
             {
                 TempData["Hata"] = "Gösterilecek Kullanıcı Bulunamadı !";
-                return Redirect("/hata/404");
+                return Redirect("/Error/Page404");
             }
             var sepet = db.MasrafSepetler.FirstOrDefault(i => i.Id == id);
             var user = userManager.Users.FirstOrDefault(i => i.Id == sepet.PortalUserId);
@@ -486,7 +488,7 @@ namespace Portal_v1._0._1.Controllers
             if (id == null)
             {
                 TempData["Hata"] = "Gösterilecek Kullanıcı Bulunamadı !";
-                return Redirect("/hata/404");
+                return Redirect("/Error/Page404");
             }
             var sepet = db.MasrafSepetler.FirstOrDefault(i => i.Id == id);
             db.MasrafSepetler.Remove(sepet);
@@ -531,7 +533,7 @@ namespace Portal_v1._0._1.Controllers
             if (id == null)
             {
                 TempData["Hata"] = "Gösterilecek Kullanıcı Bulunamadı !";
-                return Redirect("/hata/404");
+                return Redirect("/Error/Page404");
             }
 
             var silinecek = db.CVler.FirstOrDefault(i => i.Id == id);
@@ -548,6 +550,286 @@ namespace Portal_v1._0._1.Controllers
             return RedirectToAction("CVEkle");
         }
 
+        //public ActionResult NakitAkislari()
+        //{
 
+        //    var cashflow = db.NakitAkisSepeti.Where(y => y.isDelete == false).Select(i => new NakitAkisiModel()
+        //    {
+        //        ExpenseTitle = db.CashFlowStatement.FirstOrDefault(x => x.NakitAkisSepetId == i.Id).ExpenseTitle,
+        //        ExpenseDetail = db.CashFlowStatement.FirstOrDefault(x => x.NakitAkisSepetId == i.Id).ExpenseDetail,
+        //        ExpencePrice = db.CashFlowStatement.FirstOrDefault(x => x.NakitAkisSepetId == i.Id).ExpencePrice,
+        //        Income = db.CashFlowStatement.FirstOrDefault(x => x.NakitAkisSepetId == i.Id).Income,
+        //        Expense = db.CashFlowStatement.FirstOrDefault(x => x.NakitAkisSepetId == i.Id).Expense,
+        //        ExpenseDate = db.CashFlowStatement.FirstOrDefault(x => x.NakitAkisSepetId == i.Id).ExpenseDate,
+        //        isActive = db.NakitAkisSepeti.FirstOrDefault(x => x.Id == i.Id).isActive,
+        //        isDeleted = i.isDelete,
+        //        Id = i.Id
+        //    });
+        //    return View(cashflow.ToList());
+        //}
+        //public ActionResult NakitAkisiGoruntule(int? id)
+        //{
+        //    if (String.IsNullOrEmpty(id.ToString()))
+        //    {
+        //        TempData["Hata"] = "Gösterilecek Nakit Akışı Bulunamadı !";
+        //        return Redirect("/Error/Page404");
+        //    }
+        //    var nakitakisi = db.CashFlowStatement.Where(i => i.NakitAkisSepetId == id);
+        //    var _sepet = db.NakitAkisSepeti.FirstOrDefault(i => i.Id == id);
+        //    ViewBag.user = userManager.Users.FirstOrDefault(i => i.Id == _sepet.PortalUserId);
+        //    ViewBag.sepet = _sepet;
+        //    return View(nakitakisi);
+        //}
+        //public ActionResult NakitAkisPasifYap(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        TempData["Hata"] = "Gösterilecek Nakit Akışı Bulunamadı !";
+        //        return Redirect("/Error/Page404");
+        //    }
+        //    var sepet = db.NakitAkisSepeti.FirstOrDefault(i => i.Id == id);
+        //    var user = userManager.Users.FirstOrDefault(i => i.Id == sepet.PortalUserId);
+
+        //    sepet.isActive = false;
+        //    db.SaveChanges();
+        //    TempData["Success"] = "Nakit Akışı Pasif Yapıldı!";
+        //    return RedirectToAction("NakitAkislari");
+        //}
+        //public ActionResult NakitAkisAktifYap(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        TempData["Hata"] = "Gösterilecek Nakit Akışı Bulunamadı !";
+        //        return Redirect("/Error/Page404");
+        //    }
+        //    var sepet = db.NakitAkisSepeti.FirstOrDefault(i => i.Id == id);
+        //    var user = userManager.Users.FirstOrDefault(i => i.Id == sepet.PortalUserId);
+
+        //    sepet.isActive = true;
+        //    db.SaveChanges();
+        //    TempData["Success"] = "Nakit Akışı Aktif Yapıldı!";
+        //    return RedirectToAction("NakitAkislari");
+        //}
+        //public ActionResult NakitAkisSil(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        TempData["Hata"] = "Gösterilecek Nakit Akışı Bulunamadı !";
+        //        return Redirect("/Error/Page404");
+        //    }
+        //    var sepet = db.NakitAkisSepeti.FirstOrDefault(i => i.Id == id);
+        //    var user = userManager.Users.FirstOrDefault(i => i.Id == sepet.PortalUserId);
+
+        //    sepet.isDelete = true;
+        //    db.SaveChanges();
+        //    TempData["Success"] = "Nakit Akışı Silindi!";
+        //    return RedirectToAction("NakitAkislari");
+        //}
+
+        [HttpPost]
+        public JsonResult NewCashFlowEvent(List<CashFlowGeneralVM> AddedCFList)
+        {
+            var cfitemID = 0;
+            var cfID = 0;
+            DateTime getdate;
+            DateTime chcksdate;
+
+            var status = false;
+
+            List<CashFlow> cf = new List<CashFlow>();
+            List<CashFlowItem> cfi = new List<CashFlowItem>();
+            List<CashFlowRelations> cfr = new List<CashFlowRelations>();
+
+
+            IdentityDataContext dbt = new IdentityDataContext();
+            if (AddedCFList != null || AddedCFList.Count > 0)
+            {
+                foreach (var item in AddedCFList)
+                {
+                    CashFlowItem cfiitem = new CashFlowItem();
+                   
+                    getdate = DateTime.Parse(item.Date);
+                    
+                    string chckdate = getdate.ToString("yyyy-MM-dd", DateTimeFormatInfo.InvariantInfo);
+                    chcksdate = DateTime.ParseExact(chckdate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+
+                    cfiitem.ItemTitle = item.Title;
+                    cfiitem.ItemContent = item.Content;
+                    cfiitem.Unit = item.Unit;
+                    cfiitem.TotalAmount = item.TotalAmount;
+                    cfiitem.Amount = item.Amount;
+                    db.CashFlowItem.Add(cfiitem);
+                    db.SaveChanges();
+
+                    cfitemID = cfiitem.ID;
+
+                    var cntrldate = db.CashFlow.Where(x => x.Date == chcksdate).FirstOrDefault();
+                    CashFlowRelations cfritem = new CashFlowRelations();
+                    CashFlow cfitem = new CashFlow();
+
+                    if (cntrldate == null)
+                    {
+                        
+                        cfitem.Date = chcksdate;
+
+                        db.CashFlow.Add(cfitem);
+                        db.SaveChanges();
+
+                        cfID = cfitem.ID;
+
+                        cfritem.isActive = item.isActive;
+                        cfritem.isDelete = item.isDelete;
+                        cfritem.CashFlowID = cfID;
+                        cfritem.CashFlowItemsID = cfitemID;
+                        cfritem.CashFlowCategoriesID = item.CategoryID;
+                        cfritem.ModifiedUser = userManager.Users.FirstOrDefault(i => i.UserName == HttpContext.User.Identity.Name).Id;
+
+                        db.CashFlowRelations.Add(cfritem);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                                cfID = cntrldate.ID;
+                                
+                                cfritem.isActive = item.isActive;
+                                cfritem.isDelete = item.isDelete;
+                                cfritem.CashFlowID = cfID;
+                                cfritem.CashFlowItemsID = cfitemID;
+                                cfritem.CashFlowCategoriesID = item.CategoryID;
+                                cfritem.ModifiedUser = userManager.Users.FirstOrDefault(i => i.UserName == HttpContext.User.Identity.Name).Id;
+                                db.CashFlowRelations.Add(cfritem);
+                                db.SaveChanges();
+
+                    }
+                    db.SaveChanges();
+                }
+                
+                status = true;
+            }
+            return new JsonResult { Data = new {status = status} };
+        }
+
+        public ActionResult NewCFEvent()
+        {
+            return PartialView("_NewCashFlowPage");
+        }
+
+        public JsonResult newCFEventGetCategories()
+        {
+            IdentityDataContext dbt = new IdentityDataContext();
+
+            List<CashFlowCategories> catList = dbt.CashFlowCategories.ToList();
+
+            List<SelectListItem> getCategories = new List<SelectListItem>();
+
+            foreach (CashFlowCategories item in catList)
+            {
+
+                getCategories.Add(new SelectListItem
+                    { Text = item.Name, Value = item.ID.ToString() });
+            }
+
+            return Json(new SelectList(getCategories, "Value", "Text"));
+        }
+
+        public JsonResult UpdateCFEventGetCategories(int? id)
+        {
+            IdentityDataContext dbt = new IdentityDataContext();
+
+            List<CashFlowCategories> catList = dbt.CashFlowCategories.ToList();
+            var CheckSelected = false;
+
+            List<SelectListItem> getCategories = new List<SelectListItem>();
+            var selectedRelation = dbt.CashFlowRelations.Where(x => x.ID == id).FirstOrDefault();
+
+            foreach (CashFlowCategories item in catList)
+            {   
+                if(item.ID == selectedRelation.CashFlowCategoriesID)
+                {
+                    CheckSelected = true;
+                }
+                else
+                {
+                    CheckSelected = false;
+                }
+
+                getCategories.Add(new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.ID.ToString(),
+                    Selected = CheckSelected
+                });
+
+                CheckSelected = false;
+            }
+            return Json(new SelectList(getCategories, "Value", "Text", "Selected"));
+        }
+
+        [HttpPost]
+        public JsonResult UpdateCashFlowEvent(int? id, CashFlowGeneralVM Data)
+        {
+            DateTime getdate;
+            DateTime chcksdate;
+            var cfID = 0;
+            var status = false;
+
+            List<CashFlow> cf = new List<CashFlow>();
+            List<CashFlowItem> cfi = new List<CashFlowItem>();
+            List<CashFlowRelations> cfr = new List<CashFlowRelations>();
+
+
+            IdentityDataContext dbt = new IdentityDataContext();
+
+            if (Data != null)
+            {
+                getdate = DateTime.Parse(Data.Date);
+
+                string chckdate = getdate.ToString("yyyy-MM-dd", DateTimeFormatInfo.InvariantInfo);
+                chcksdate = DateTime.ParseExact(chckdate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+                var relatedItem = db.CashFlowRelations.Where(x => x.ID == Data.ID).FirstOrDefault();
+                if(relatedItem != null)
+                {
+                    var relatedCFIitems = db.CashFlowItem.Where(y => y.ID == relatedItem.CashFlowItemsID).FirstOrDefault();
+                    var relatedCFItems = db.CashFlow.Where(z => z.ID == relatedItem.CashFlowID).FirstOrDefault();
+
+                    relatedCFIitems.ItemTitle = Data.Title;
+                    relatedCFIitems.ItemContent = Data.Content;
+                    relatedCFIitems.Amount = Data.Amount;
+                    relatedCFIitems.Unit = Data.Unit;
+                    relatedCFIitems.TotalAmount = Data.TotalAmount;
+
+                    if(relatedCFItems.Date != chcksdate)
+                    {
+                        var selectedNewDate = db.CashFlow.Where(w => w.Date == chcksdate).FirstOrDefault();
+                        if (selectedNewDate != null)
+                        {
+                            relatedItem.CashFlowID = selectedNewDate.ID;
+                        }
+                        else
+                        {
+                            CashFlow cfitem = new CashFlow();
+
+                            cfitem.Date = chcksdate;
+                            db.CashFlow.Add(cfitem);
+                            db.SaveChanges();
+
+                            cfID = cfitem.ID;
+
+                            relatedItem.CashFlowID = cfID;
+                        }
+                    }
+                    relatedItem.isActive = Data.isActive;
+                    relatedItem.isDelete = Data.isDelete;
+                    relatedItem.ModifiedUser = userManager.Users.FirstOrDefault(i => i.UserName == HttpContext.User.Identity.Name).Id;
+                    relatedItem.CashFlowCategoriesID = Data.CategoryID;
+
+                    db.SaveChanges();
+                }
+                status = true;
+            }
+            return new JsonResult { Data = new { status = status } };
+        }
     }
 }

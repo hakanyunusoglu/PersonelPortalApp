@@ -40,13 +40,13 @@ namespace Portal_v1._0._1.Migrations
                 manager.Create(role);
             }
 
-            if (!context.Users.Any(u => u.UserName == "kaldera"))
+            if (!context.Users.Any(u => u.UserName == "hakan"))
             {
                 var store = new UserStore<PortalUser>(context);
                 var manager = new UserManager<PortalUser>(store);
-                var user = new PortalUser { UserName = "kaldera", Name="Kaldera" , LastName="EGY", PhoneNumber="55555555" , Title="portaladmin" , Address="admin" , Email="kaldera@portal.com", IsCikis=DateTime.Now.ToLongDateString(),IseGiris= DateTime.Now, CiktiMi=false  };
+                var user = new PortalUser { UserName = "hakan", Name="hakan" , LastName="Yunusoglu", PhoneNumber="55555555" , Title="portaladmin" , Address="admin" , Email="hakan@portal.com", IsCikis=DateTime.Now.ToLongDateString(),IseGiris= DateTime.Now, CiktiMi=false  };
 
-                manager.Create(user, "kaldera123");
+                manager.Create(user, "hakan123");
                 manager.AddToRole(user.Id, "Admin");
             }
         }

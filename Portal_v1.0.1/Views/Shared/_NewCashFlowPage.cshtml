@@ -1,0 +1,117 @@
+﻿@using Portal_v1._0._1.ViewModels
+
+@model CashFlowGeneralVM
+
+<style>
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+
+<script src="~/JS_CRUD/FillCategoryListNewCF.js"></script>
+<script src="~/JS_CRUD/NewCashFlow.js"></script>
+
+<form class="form-horizontal">
+    <div class="card border-primary mb-3">
+        <div class="card-header">
+            <strong class="custom-strong">
+                <span>Sil </span> <input type="checkbox" name="chckisDelete" id="chckisDelete" value="0">
+                <span> Aktif </span> <input type="checkbox" name="chckisActive" id="chckisActive" value="0" checked>
+            </strong>
+        </div>
+        <div class="card-body">
+            <div class="form-row">
+                <div class="col-md-2">
+                    <label for="Date"><strong class="custom-strong">Tarih</strong></label>
+                    <input type="date" name="date" id="Date" class="form-control" required />
+                    <div class="invalid-feedback">Tarih alanı boş geçilemez!</div>
+                </div>
+                <div class="col-md-2">
+                    <label for="ItemTitle"><strong class="custom-strong">Öğe</strong></label>
+                    <input type="text" name="ItemTitle" id="ItemTitle" class="form-control" placeholder="Öğe giriniz" required />
+                    <div class="invalid-feedback" id="terror">Öğe alanı boş geçilemez!</div>
+                </div>
+                <div class="col-md-2">
+                    <label for="CategoryName"><strong class="custom-strong">Kategori</strong></label>
+                    <select class="form-control" id="CategoryName">
+                        @*JS_CRUD/FillCategoryListNewCF.js içinden geliyor!*@
+
+                    </select>
+                </div>
+                <div class="col-sm-1">
+                    <label for="Unit"><strong class="custom-strong">Miktar</strong></label>
+                    <input name="Unit" id="Unit" class="form-control" type="number" required />
+                </div>
+                <div class="col-sm-1">
+                    <label for="Unit"><strong class="custom-strong">Birim Fiyatı</strong></label>
+                    <input name="Amount" id="Amount" class="form-control" type="number" required />
+                    <div class="invalid-feedback" id="terror">Birim fiyatı boş geçilemez!</div>
+                </div>
+                <div class="col-md-3">
+                    <label for="ItemContent"><strong class="custom-strong">Açıklama</strong></label>
+                    <input type="text" name="ItemContent" id="ItemContent" class="form-control" placeholder="Açıklama Girin" required />
+                    <div class="invalid-feedback">Açıklama alanı boş bırakılamaz !!!</div>
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" id="btnNewCFbasket" class="btn btn-custom-blue" style="margin-top:2em;">Ekle</button>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer small text-muted float-right"> </div>
+
+    </div>
+    <div class="card border-primary mb-3" id="newcashflowcontenttable">
+
+        <div class="card-header">
+            <i class="fa fa-table"></i> <strong class="custom-strong">Kaydedilecek Nakit Akışları</strong>
+        </div>
+        <div class="card-body">
+
+
+            <div class="form-row">
+                <div class="table-responsive">
+                    <table class="table ">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="custom-strong">Tarih</th>
+                                <th scope="col" class="custom-strong">Öğe</th>
+                                <th scope="col" class="custom-strong">Kategori</th>
+                                <th scope="col" class="custom-strong">Miktar</th>
+                                <th scope="col" class="custom-strong">Birim Fiyatı</th>
+                                <th scope="col" class="custom-strong">Toplam</th>
+                                <th scope="col" class="custom-strong">Açıklama</th>
+                                <th scope="col" class="custom-strong">Aktif</th>
+                                <th scope="col" class="custom-strong">Silinmiş</th>
+                                <th scope="col" class="custom-strong"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="cfbasket"></tbody>
+                        <tfoot>
+                            <tr>
+                                <th scope="col" class="custom-strong"></th>
+                                <th scope="col" class="custom-strong"></th>
+                                <th scope="col" class="custom-strong"></th>
+                                <th scope="col" class="custom-strong"></th>
+                                <th scope="col" class="custom-strong"></th>
+                                <th scope="col" class="custom-strong"></th>
+                                <th scope="col" class="custom-strong"></th>
+                                <th scope="col" class="custom-strong"></th>
+                                <th scope="col" class="custom-strong"></th>
+                                <th scope="col" class="custom-strong">Toplam Ödeme: <span id="TotalAmount"></span></th>
+                                <th scope="col"><button class="btn btn-outline-custom-blue" style="padding:0 10px 0 10px;" id="SaveCF">Akışları Kaydet</button></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

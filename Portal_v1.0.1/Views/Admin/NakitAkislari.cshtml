@@ -1,0 +1,122 @@
+﻿@model IEnumerable<Portal_v1._0._1.Models.NakitAkisiModel>
+@{
+    ViewBag.Title = "NakitAkislari";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/Admin/Index">Admin</a>
+    </li>
+    <li class="breadcrumb-item active">Nakit Akışları</li>
+</ol>
+<div class="card border-primary mb-3">
+    <div class="card-header">
+        <i class="fa fa-table"></i> <strong class="custom-strong">Nakit Akış Tablosu</strong>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped" id="dataTable" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th class="custom-strong">Başlık</th>
+                        <th class="custom-strong">Açıklama</th>
+                        <th class="custom-strong">Ödeme</th>
+                        <th class="custom-strong">Tür</th>
+                        <th class="custom-strong">Tarih</th>
+                        <th class="custom-strong">Durum</th>
+                        <th class="custom-strong">Detay</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th class="custom-strong">Başlık</th>
+                        <th class="custom-strong">Açıklama</th>
+                        <th class="custom-strong">Ödeme</th>
+                        <th class="custom-strong">Tür</th>
+                        <th class="custom-strong">Tarih</th>
+                        <th class="custom-strong">Durum</th>
+                        <th class="custom-strong">Detay</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @if (Model.Count() == 0)
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center bg-danger">Nakit akışı yok</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.ExpenseTitle</td>
+                                <td>@item.ExpenseDetail</td>
+                                <td>@item.ExpencePrice ₺</td>
+                                @if (item.Income == true && item.Expense == false)
+                                {
+                                    <td>Gelir</td>
+                                }
+                                else if (item.Expense == true && item.Income == false)
+                                {
+                                    <td>Gider</td>
+                                }
+                                <td>@item.ExpenseDate.ToShortDateString()</td>
+                                @if (item.isActive == true)
+                                {
+                                    <td><span class="badge badge-success" style="padding:5px;">Aktif</span></td>
+                                }
+                                else
+                                {
+                                    <td><span class="badge badge-danger" style="padding:5px;">Pasif</span></td>
+                                }
+                                <td><a href="/Admin/NakitAkisiGoruntule/@item.Id.ToString()" class="btn btn-outline-custom-blue" style="padding:0 5px 0 5px;">Görüntüle</a></td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer small text-muted">@DateTime.Now.Year</div>
+</div>
+
+@*@section scripts{
+    <script src="~/js/sb-admin-datatables.js"></script>
+
+
+}*@
+@section scripts{
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#dataTable').DataTable({
+                "order": [[4, "desc"]],
+                dom: 'Bfrtip',
+                buttons: [{
+                    extend: 'excel',
+                    text: 'Excel  ',
+                    className: 'float-left btn btn-success',
+                    filename: 'Masraf Excel Raporu',
+                    exportOptions: { modifier: { page: 'all' } }
+                },
+                {
+                    extend: 'pdf',
+                    text: 'PDF ',
+                    className: 'float-left ml-2 btn btn-danger',
+                    filename: 'Masraf PDF Raporu',
+                    exportOptions: { modifier: { page: 'all' } }
+                }]
+
+            });
+
+        });
+    </script>
+}
+

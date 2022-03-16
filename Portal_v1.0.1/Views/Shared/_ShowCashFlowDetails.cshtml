@@ -1,0 +1,181 @@
+﻿@using Portal_v1._0._1.ViewModels
+@using Portal_v1._0._1.Models
+@using Portal_v1._0._1.Identity
+@model CashFlowGeneralVM
+@{
+    IdentityDataContext dbt = new IdentityDataContext();
+    List<CashFlowCategories> catList = dbt.CashFlowCategories.ToList();
+
+    var formatDate = Model.Date.Split('/');
+    int formatDay = Convert.ToInt32(formatDate[1]);
+    int formatMonth = Convert.ToInt32(formatDate[0]);
+    int lengthday = formatDate[0].Length;
+    string newDay = "";
+    string newMonth = "";
+
+    if (formatDay < 10)
+    {
+        newDay = "0" + formatDay;
+    }
+    else
+    {
+        newDay = formatDay.ToString();
+    }
+    if (formatMonth < 10)
+    {
+        newMonth = "0" + formatMonth;
+    }
+    else
+    {
+        newMonth = formatMonth.ToString();
+    }
+    var newDate = formatDate[2] + "-" + newMonth.ToString() + "-" + newDay.ToString();
+}
+
+<style>
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+
+@*<script src="~/JS_CRUD/FillCategoryListUpdateCF.js"></script>*@
+<script src="~/JS_CRUD/UpdateCashFlow.js"></script>
+
+<form class="form-horizontal">
+    <input type="hidden" id="CFID" value="@Model.ID" />
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label class="m-label m-label--single m--font-bolder">Tarih:  <span class="font-weight-bold" style="color:black;"> (@Model.Date) </span></label>
+            <input type="date" id="txtDate" name="txtDate" class="form-control" value="@newDate" required />
+            <div class="invalid-feedback">Tarih alanı boş geçilemez!</div>
+        </div>
+
+    </div>
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="m-form__label">
+                <label class="m-label m-label--single m--font-bolder">Öğe: <span class="font-weight-bold" style="color:black;"> (@Model.Title) </span></label>
+            </div>
+            <input class="form-control m--font-boldest2" id="txtTitle" value="@Model.Title" required />
+            <div class="invalid-feedback">Öğe alanı boş geçilemez!</div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="m-form__label">
+                <label class="m-label m-label--single m--font-bolder">Kategori: <span class="font-weight-bold" style="color:black;"> (@Model.CategoryName) </span></label>
+            </div>
+            <select class="form-control" id="txtCategory" name="txtCategory">
+                @foreach (var cfc in catList)
+                {
+                    if (cfc.ID == Model.CategoryID)
+                    {
+                        <option value="@cfc.ID" selected>@cfc.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@cfc.ID">@cfc.Name</option>
+                    }
+                }
+                @*JS_CRUD/FillCategoryListUpdateCF.js içinden geliyor ama selected özelliği çalışmıyor!*@
+            </select>
+            <div class="invalid-feedback">Kategori alanı boş geçilemez!</div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-4">
+            <div class="m-form__label">
+                <label class="m-label m-label--single m--font-bolder">Miktar: <span class="font-weight-bold" style="color:black;"> (@Model.Unit) </span></label>
+            </div>
+            <input class="form-control m--font-boldest2" id="txtUnit" type="number" value="@Model.Unit" required />
+            <div class="invalid-feedback">Miktar alanı boş geçilemez!</div>
+        </div>
+        <div class="col-md-8">
+            <div class="m-form__label">
+                <label class="m-label m-label--single m--font-bolder">Birim Fiyatı: <span class="font-weight-bold" style="color:black;"> (@Model.Amount₺) </span></label>
+            </div>
+            <div class="input-group">
+                <input class="form-control m--font-boldest2" id="txtAmount" type="number" value="@Model.Amount" required />
+                <div class="invalid-feedback">Birim fiyatı alanı boş geçilemez!</div>
+                <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">₺</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-9">
+            <div class="m-form__label">
+                <label class="m-label m-label--single m--font-bolder">Toplam Tutar: <span class="font-weight-bold" style="color:black;"> (@Model.TotalAmount₺) </span></label>
+            </div>
+            <div class="input-group">
+                <input class="form-control m--font-boldest2" id="txtTotalAmount" value="@Model.TotalAmount" readonly />
+                <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">₺</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="m-form__label">
+                <label class="m-label m-label--single m--font-bolder">Durum</label>
+            </div>
+            @if (Model.isActive == true && Model.isDelete == false)
+            {
+                <span class="col-md-1" style="background-color:green; color:white; font-weight:600; height:5rem">Aktif</span>
+            }
+            else if (Model.isActive == false && Model.isDelete == false)
+            {
+                <span class="col-md-1" style="background-color:gray; color:black; font-weight:600">Pasif</span>
+            }
+            else if (Model.isActive == false && Model.isDelete == true)
+            {
+                <span class="col-md-1" style="background-color:red; color:white; font-weight:600">Silindi</span>
+            }
+            else if (Model.isActive == true && Model.isDelete == true)
+            {
+                <span class="col-md-1" style="background-color:red; color:white; font-weight:600">Silindi</span>
+            }
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="m-form__label">
+                <label class="m-label m-label--single m--font-bolder">Açıklama</label>
+            </div>
+            <textarea class="form-control m--font-boldest2" id="txtContent" rows="3" required>@Model.Content</textarea>
+            <div class="invalid-feedback">Açıklama alanı boş geçilemez!</div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-lg-10 checkbox">
+
+            @if (Model.isActive)
+            {
+                <label class="checkbox-inline"><input type="checkbox" id="chckisActive" value="0" checked> Aktif <span class="col-md-1"></span> </label>
+            }
+            else
+            {
+                <label class="checkbox-inline"><input type="checkbox" id="chckisActive" value="1"> Aktif yap </label>
+            }
+
+            @if (Model.isDelete)
+            {
+                <label class="checkbox-inline"><input type="checkbox" id="chckisDelete" value="0" checked> Silindi </label>
+            }
+            else
+            {
+                <label class="checkbox-inline"><input type="checkbox" id="chckisDelete" value="1"> Sil </label>
+            }
+        </div>
+    </div>
+    <hr />
+    <button type="button" id="btnUpdate" class="btn btn-info" style="float:right">Güncelle</button>
+</form>
+

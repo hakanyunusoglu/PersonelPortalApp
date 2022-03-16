@@ -1,0 +1,307 @@
+﻿@model Portal_v1._0._1.Models.NakitAkisiModel
+@{
+    ViewBag.Title = "NakitAkisGir";
+    Layout = "~/Views/Shared/_MasrafLayout.cshtml";
+}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/Home/Index">Ana Sayfa</a>
+    </li>
+    <li class="breadcrumb-item active">Nakit Akış Gir</li>
+</ol>
+
+<div class="card border-primary mb-3">
+    <div class="card-header">
+        <i class="fa fa-table"></i> <strong class="custom-strong">Yeni Nakit Akışı</strong> <strong id="userRole">@ViewBag.UserRoleName</strong>
+    </div>
+    <div class="card-body">
+
+
+        <div class="form-row">
+            <div class="col-md-2">
+                <label for="Title"><strong class="custom-strong">Başlık</strong></label>
+                <input type="text" name="ExpenseTitle" id="ExpenseTitle" class="form-control" placeholder="Başlık Girin" required />
+                <div class="invalid-feedback" id="terror">Başlık boş bırakılamaz !!!</div>
+            </div>
+            <div class="col-md-2">
+                <label for="description"><strong class="custom-strong">Açıklama</strong></label>
+                <input type="text" name="ExpenseDetail" id="ExpenseDetail" class="form-control" placeholder="Açıklama Girin" required />
+                <div class="invalid-feedback" id="terror">Açıklama boş bırakılamaz !!!</div>
+            </div>
+            <div class="col-md-2">
+                <label for="price"><strong class="custom-strong">Tutar</strong></label>
+                <div class="input-group">
+                    <input type="text" name="ExpencePrice" id="ExpencePrice" class="form-control" placeholder="Tutar Girin" required />
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="basic-addon2">₺</span>
+                    </div>
+                    <div class="invalid-feedback">Lütfen tutar giriniz !!!</div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label for="date"><strong class="custom-strong">Tarih</strong></label>
+                <input type="date" name="ExpenseDate" id="ExpenseDate" class="form-control" required />
+                <div class="invalid-feedback">Lütfen tarih giriniz !!!</div>
+            </div>
+            <div class="col-md-2">
+                <label for="description"><strong class="custom-strong">Tür</strong></label>
+                <fieldset id="group1">
+                    <input type="radio" value="0" name="group1" checked>&nbsp;Gider&nbsp;
+                    <input type="radio" value="1" name="group1">&nbsp;Gelir
+                </fieldset>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" id="sepetEkle" class="btn btn-custom-blue" style="margin-top:2em;">Sepete Ekle</button>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer small text-muted float-right"> </div>
+
+</div>
+<div class="card border-primary mb-3">
+
+    <div class="card-header">
+        <i class="fa fa-table"></i> <strong class="custom-strong">Sepet</strong>
+    </div>
+    <div class="card-body">
+
+
+        <div class="form-row">
+            <div class="table-responsive">
+                <table class="table ">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="custom-strong">Başlık</th>
+                            <th scope="col" class="custom-strong">Açıklama</th>
+                            <th scope="col" class="custom-strong">Tutar</th>
+                            <th scope="col" class="custom-strong">Tarih</th>
+                            <th scope="col" class="custom-strong">Tür</th>
+                            <th scope="col" class="custom-strong">İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sepetici"></tbody>
+                    <tfoot>
+                        <tr>
+                            <th scope="col" class="custom-strong"></th>
+                            <th scope="col" class="custom-strong"></th>
+                            <th scope="col" class="custom-strong"></th>
+                            <th scope="col" class="custom-strong"></th>
+                            <th scope="col" class="custom-strong">Toplam Tutar: <span id="toplam"></span></th>
+                            <th scope="col"><button class="btn btn-outline-custom-blue" style="padding:0 10px 0 10px;" id="kaydet">Kaydet</button></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /.container-fluid-->
+<!-- /.content-wrapper-->
+<footer class="sticky-footer">
+    <div class="container">
+        <div class="text-center">
+            <small>Copyright © Kalderasoft Portal 2019</small>
+        </div>
+    </div>
+</footer>
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fa fa-angle-up"></i>
+</a>
+<!-- Logout Modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@User.Identity.Name, çıkış yapmak istiyor musunuz? </h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Oturumunuzu sonlandırmak için çıkış yap butonuna tıklayınız.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Geri</button>
+                <a class="btn btn-custom-blue" href="/Account/Logout">Çıkış Yap</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Bootstrap core JavaScript-->
+<script src="~/vendor/jquery/jquery.min.js"></script>
+<script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        var sepet = [];
+        var toplam = 0;
+        var sayac = 0;
+        var parsedToplam = 0;        
+        var Incomes = 0;
+        var Expenses = 0;
+
+        $("#sepetEkle").on('click', function () {
+            var ExpenseTitle = $("#ExpenseTitle").val();
+            var ExpenseDetail = $("#ExpenseDetail").val();
+            var ExpencePrice = $("#ExpencePrice").val();
+            var ExpenseDate = $("#ExpenseDate").val();
+            var radioValue = document.querySelector('input[name="group1"]:checked').value;
+            if (radioValue == 0) {
+                Incomes = 0;
+                Expenses = 1;
+            } else if (radioValue == 1) {
+                Incomes = 1;
+                Expenses = 0;
+            }
+            var Income = $(Incomes);
+            var Expense = $(Expenses);
+            if (ExpenseTitle == null || ExpenseTitle == "") {
+                $("#ExpenseTitle").removeClass("is-vaild").addClass("is-invalid");
+                return;
+            }
+            else if (typeof ExpenseTitle != "string") {
+                //string kontrolü ayrı yapılıp hata mesajı dinamik verilecek
+                $("#terror").empty().append("String gir!!!");
+                $("#ExpenseTitle").removeClass("is-vaild").addClass("is-invalid");
+                return;
+            }
+            if (ExpenseDetail == null || ExpenseDetail == "") {
+                $("#ExpenseDetail").removeClass("is-vaild").addClass("is-invalid");
+                return;
+            }
+            else if (typeof ExpenseDetail != "string") {
+                //string kontrolü ayrı yapılıp hata mesajı dinamik verilecek
+                $("#terror").empty().append("String gir!!!");
+                $("#ExpenseDetail").removeClass("is-vaild").addClass("is-invalid");
+                return;
+            }
+            else {
+                $("#ExpenseDetail").removeClass("is-invalid").addClass("is-valid");
+            }
+            if (ExpencePrice == null || ExpencePrice == "") {
+                $("#ExpencePrice").removeClass("is-vaild").addClass("is-invalid");
+                return;
+            }
+            else {
+                $("#ExpencePrice").removeClass("is-invalid").addClass("is-valid");
+            }
+            if (ExpenseDate == null || ExpenseDate == "") {
+                $("#ExpenseDate").removeClass("is-vaild").addClass("is-invalid");
+                return;
+            }
+            else {
+                $("#ExpenseDate").removeClass("is-invalid").addClass("is-valid");
+            }
+            var NakitAkisi = {
+                Sayac: sayac,
+                ExpenseTitle: ExpenseTitle,
+                ExpenseDetail: ExpenseDetail,
+                ExpencePrice: ExpencePrice,
+                ExpenseDate: ExpenseDate,
+                Income: Incomes,
+                Expense: Expenses
+            };
+            toplam += parseFloat(ExpencePrice);
+            sepet.push(NakitAkisi);
+            sayac++;
+
+            $("#sepetici").empty();   
+           
+            sepet.forEach(function (item) {            
+               var Cashflowtype = "";
+               if (item.Income == 1) {
+                    Cashflowtype = "Gelir";
+                }
+                else {
+                    Cashflowtype = "Gider";
+                }
+                var sepetitem = "<tr><td>" + item.ExpenseTitle + "<tr><td>" + item.ExpenseDetail + "</td><td>" + item.ExpencePrice + "</td><td>" + item.ExpenseDate + "</td><td>" + Cashflowtype + "</td><td><button  style='padding:0 10px 0 10px;' value=" + item.Sayac + " class='btn btn-danger'>Sil</button></td>";
+                $("#sepetici").append(sepetitem);
+            })
+            if (toplam % 1 == 0)
+                parsedToplam = toplam;
+            else {
+                parsedToplam = parseFloat(toplam.toFixed(2));
+            }
+            $("#toplam").empty().append(parsedToplam + "₺");
+            $("#ExpenseTitle").val("");
+            $("#ExpenseDetail").val("");
+            $("#ExpencePrice").val("");
+            $("#ExpenseDate").val("");
+            $(Cashflowtype);
+        });
+
+        $("#kaydet").on('click', function () {
+            if (sepet.length == 0) {
+                $("#sepetici").empty();
+                $("#sepetici").append("<tr><td colspan='6' class='alert alert-danger text-center'>Sepette eşya yok</td></tr>")
+                return;
+            }
+            $("#kaydet").addClass("disabled");
+            $.post("/Home/NakitAkisGir",
+                {
+                    sepet: sepet,
+                    toplam: parsedToplam.toString()
+                },
+                function (data, status) {
+                    if (status == "success") {
+                        alert("Nakit Akışı Kaydedildi");
+                        window.location.replace("/Home/NakitAkisGir");
+
+                    }
+                });
+        });
+
+        //$("#btnSil").on('click', (s) => {
+        //    sepet.slice(s);
+        //    $("#sepetici").empty();
+        //    sepet.forEach(function (item) {
+        //        var sepetitem = "<tr><th scope='row'>#</th><td>" + item.Aciklama + "</td><td>" + item.Tarih + "</td><td>" + item.Tutar + "</td><td><button id='btnSil' class='btn btn-danger'>Sil</button></td>";
+        //        $("#sepetici").append(sepetitem);
+        //    })
+        //});
+        $('#sepetici').on('click', 'tr >td>button', function () {
+            var sira = parseInt($(this).val());
+            for (var i = 0; i < sepet.length; i++) {
+                if (sepet[i].Sayac == sira) {
+                    toplam -= parseFloat(sepet[i].ExpencePrice);
+                    sepet.splice(i, 1);
+
+                    if (toplam % 1 == 0) {
+                        parsedToplam = parseInt(toplam);
+                    }
+                    else {
+                        parsedToplam = parseFloat(toplam.toFixed(2));
+                    }
+                }
+            }
+
+            $("#sepetici").empty();
+            $("#toplam").empty().append(parsedToplam + "₺");
+
+            
+            sepet.forEach(function (item) {
+                var Cashflowtype = "";
+               if (item.Income == 1) {
+                    Cashflowtype = "Gelir";
+                }
+                else {
+                    Cashflowtype = "Gider";
+                }
+                var sepetitem = "<tr><td>" + item.ExpenseTitle + "<tr><td>" + item.ExpenseDetail + "</td><td>" + item.ExpencePrice + "</td><td>" + item.ExpenseDate + "</td><td>" + Cashflowtype + "</td><td><button  style='padding:0 10px 0 10px;' value=" + item.Sayac + " class='btn btn-danger'>Sil</button></td>";
+                $("#sepetici").append(sepetitem);
+            })
+        });
+
+    });
+
+</script>
+
+<!-- Core plugin JavaScript-->
+<script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Page level plugin JavaScript-->
+<script src="~/vendor/datatables/jquery.dataTables.js"></script>
+<script src="~/vendor/datatables/dataTables.bootstrap4.js"></script>
+<!-- Custom scripts for all pages-->
+<script src="~/js/sb-admin.min.js"></script>
+<!-- Custom scripts for this page-->

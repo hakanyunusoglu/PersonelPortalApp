@@ -42,6 +42,7 @@ namespace Portal_v1._0._1.Identity
         public List<RaporModel> Raporlar { get; set; }
 
         public List<MasrafSepet> Masraflar { get; set; }
+        public List<NakitAkisi> CashFlowState { get; set; }
 
     }
 }

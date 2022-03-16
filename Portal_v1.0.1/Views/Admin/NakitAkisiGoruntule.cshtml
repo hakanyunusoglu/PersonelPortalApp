@@ -1,0 +1,139 @@
+﻿@model IEnumerable<Portal_v1._0._1.Models.NakitAkisi>
+@{
+    ViewBag.Title = "NakitAkisiGoruntule";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<ol class="breadcrumb d-print-none">
+    <li class="breadcrumb-item">
+        <a href="/Admin/Index">Admin</a>
+    </li>
+    <li class="breadcrumb-item "><a href="/Admin/NakitAkislari">Nakit Akışları</a></li>
+    <li class="breadcrumb-item active">Nakit Akışı Detay</li>
+</ol>
+<div class="d-none d-print-block mb-5">
+    <img src="~/images/logo.png" alt="logo" class="rounded mx-auto d-print-block" />
+    <div class="text-center mt-3"><h2>EGY Personel Masraf Listesi</h2></div>
+    <div class="text-center text-uppercase"><h5>EGY Bilişim Teknolojileri Yazılım Sanayi Ticaret Anonim Şirketi</h5></div>
+</div>
+<div class="clearfix"></div>
+<div class="card border-primary mb-3">
+    <div class="card-header">
+        <i class="fa fa-table"></i> <strong class="custom-strong">Nakit Akışı Detay</strong>
+    </div>
+    <div class="card-body">
+        <a href="#" class="d-print-none" onClick="return yazdir()">Nakit akışı yazdır</a>
+        <div class="d-none d-print-block mb-3">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <span class="text-center"> <strong class="custom-strong">Personel : </strong></span>
+                    @ViewBag.user.Name @ViewBag.user.LastName
+                </li>
+                <li class="list-group-item">
+                    <span class="text-center"> <strong class="custom-strong">Görevi : </strong></span>
+                    @ViewBag.user.Title
+                </li>
+            </ul>
+        </div>
+
+        <div class="table-responsive" id="yazdirilacakolandiv">
+            <table class="table display" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th class="custom-strong">Başlık</th>
+                        <th class="custom-strong">Açıklama</th>
+                        <th class="custom-strong">Ödeme</th>
+                        <th class="custom-strong">Tarih</th>
+                        <th class="custom-strong">Tür</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>@item.ExpenseTitle</td>
+                        <td>@item.ExpenseDetail</td>
+                        <td>@item.ExpencePrice ₺</td>
+                        <td>@String.Format("{0:dd/MM/yyyy}", item.ExpenseDate) </td>
+                        @if (item.Income == false && item.Expense == true)
+                        {
+                    <td>Gider</td>
+                        }
+                        else if(item.Income == true && item.Expense == false)
+                        {
+                            <td>Gelir</td>
+                        }
+
+                        </tr>
+
+                    }
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <th scope="col"> </th>
+                        <th scope="col"> </th>
+                        <th scope="col"> </th>
+                        <th scope="col"> </th>
+                        <th scope="col"> <a class="custom-strong ">Toplam = @ViewBag.sepet.TotalPrice ₺</a> </th>
+                    </tr>
+
+                    <tr>
+                        <th scope="col">
+                            @if (ViewBag.sepet.isActive)
+                            {
+
+                                <form action="/Admin/NakitAkisPasifYap/@Url.RequestContext.RouteData.Values["id"]" method="post">@Html.AntiForgeryToken()<button class="btn btn-outline-custom-blue d-print-none">Pasif Yap</button></form>
+
+
+                            }
+                            else
+                            {
+                                <form action="/Admin/NakitAkisAktifYap/@Url.RequestContext.RouteData.Values["id"]" method="post">@Html.AntiForgeryToken()<button class="btn btn-outline-custom-dark d-print-none">Aktif Yap</button></form>
+
+                            }
+
+                        </th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"><form action="/Admin/NakitAkisSil/@Url.RequestContext.RouteData.Values["id"]" method="post">@Html.AntiForgeryToken()<button class="btn btn-outline-danger d-print-none">Nakit Akışını Sil</button></form></th>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="d-none d-print-inline">
+                <div class="col-3">
+                    <span class="custom-strong">Personel İmza :</span>
+                </div>
+                <div class="col-5"><span class="custom-strong">Birim Müdürü İmza :</span></div>
+                <div class="col-4"><span class="custom-strong">Genel Müdür :</span> </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="card-footer">
+
+
+    </div>
+
+</div>
+@section scripts{
+    <script language="javascript">
+        var da = (document.all) ? 1 : 0;
+        var pr = (window.print) ? 1 : 0;
+        var mac = (navigator.userAgent.indexOf("Mac") != -1);
+
+        function yazdir() {
+            if (pr) // NS4, IE5
+                window.print()
+            else if (da && !mac) // IE4 (Windows)
+                vbPrintPage()
+            else // other browsers
+                alert("Tarayıcınız bu özelliği desteklememektedir.");
+            return false;
+        }
+    </script>
+
+
+}
+

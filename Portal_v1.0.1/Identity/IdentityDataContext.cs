@@ -24,6 +24,10 @@ namespace Portal_v1._0._1.Identity
         public DbSet<CVModel> CVler { get; set; }
         public DbSet<BilgilendirmeModel> Bilgilendirme { get; set; }
         public DbSet<BilgilendirmeModelGenel> BilgilendirmeGenel { get; set; }
+        public DbSet<CashFlow> CashFlow { get; set; }
+        public DbSet<CashFlowItem> CashFlowItem { get; set; }
+        public DbSet<CashFlowRelations> CashFlowRelations { get; set; }
+        public DbSet<CashFlowCategories> CashFlowCategories { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

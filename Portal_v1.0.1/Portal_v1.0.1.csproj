@@ -1,4 +1,5 @@
 ﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.2.4.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.4.0\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -24,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>3.6</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -55,6 +57,9 @@
     </Reference>
     <Reference Include="EPPlus, Version=4.5.3.2, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>..\packages\EPPlus.4.5.3.2\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="FullCalendar.MVC5, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FullCalendar.MVC5.1.0.7\lib\net45\FullCalendar.MVC5.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.8.4.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.8.4\lib\Net45\HtmlAgilityPack.dll</HintPath>
@@ -140,6 +145,132 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CashFlowCalendar\css\fullcalendar.css" />
+    <Content Include="CashFlowCalendar\css\fullcalendar.print.css" />
+    <Content Include="CashFlowCalendar\js\fullcalendar.js" />
+    <Content Include="CashFlowCalendar\js\fullcalendar.min.js" />
+    <Content Include="CashFlowCalendar\js\lang-all.js" />
+    <Content Include="CashFlowCalendar\js\lang\tr.js" />
+    <Content Include="CashFlowCalendar\packages\bootstrap\LICENSE.txt" />
+    <Content Include="CashFlowCalendar\packages\bootstrap\main.css" />
+    <Content Include="CashFlowCalendar\packages\bootstrap\main.esm.js" />
+    <Content Include="CashFlowCalendar\packages\bootstrap\main.js" />
+    <Content Include="CashFlowCalendar\packages\bootstrap\main.min.css" />
+    <Content Include="CashFlowCalendar\packages\bootstrap\main.min.js" />
+    <Content Include="CashFlowCalendar\packages\core\LICENSE.txt" />
+    <Content Include="CashFlowCalendar\packages\core\locales-all.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales-all.min.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\af.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\ar-dz.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\ar-kw.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\ar-ly.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\ar-ma.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\ar-sa.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\ar-tn.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\ar.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\bg.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\bs.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\ca.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\cs.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\da.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\de.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\el.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\en-au.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\en-gb.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\en-nz.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\es-us.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\es.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\et.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\eu.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\fa.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\fi.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\fr-ca.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\fr-ch.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\fr.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\gl.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\he.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\hi.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\hr.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\hu.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\id.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\is.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\it.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\ja.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\ka.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\kk.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\ko.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\lb.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\lt.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\lv.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\mk.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\ms.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\nb.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\nl.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\nn.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\pl.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\pt-br.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\pt.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\ro.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\ru.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\sk.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\sl.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\sq.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\sr-cyrl.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\sr.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\sv.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\th.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\tr.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\uk.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\vi.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\zh-cn.js" />
+    <Content Include="CashFlowCalendar\packages\core\locales\zh-tw.js" />
+    <Content Include="CashFlowCalendar\packages\core\main.css" />
+    <Content Include="CashFlowCalendar\packages\core\main.esm.js" />
+    <Content Include="CashFlowCalendar\packages\core\main.js" />
+    <Content Include="CashFlowCalendar\packages\core\main.min.css" />
+    <Content Include="CashFlowCalendar\packages\core\main.min.js" />
+    <Content Include="CashFlowCalendar\packages\daygrid\LICENSE.txt" />
+    <Content Include="CashFlowCalendar\packages\daygrid\main.css" />
+    <Content Include="CashFlowCalendar\packages\daygrid\main.esm.js" />
+    <Content Include="CashFlowCalendar\packages\daygrid\main.js" />
+    <Content Include="CashFlowCalendar\packages\daygrid\main.min.css" />
+    <Content Include="CashFlowCalendar\packages\daygrid\main.min.js" />
+    <Content Include="CashFlowCalendar\packages\google-calendar\LICENSE.txt" />
+    <Content Include="CashFlowCalendar\packages\google-calendar\main.esm.js" />
+    <Content Include="CashFlowCalendar\packages\google-calendar\main.js" />
+    <Content Include="CashFlowCalendar\packages\google-calendar\main.min.js" />
+    <Content Include="CashFlowCalendar\packages\interaction\LICENSE.txt" />
+    <Content Include="CashFlowCalendar\packages\interaction\main.esm.js" />
+    <Content Include="CashFlowCalendar\packages\interaction\main.js" />
+    <Content Include="CashFlowCalendar\packages\interaction\main.min.js" />
+    <Content Include="CashFlowCalendar\packages\list\LICENSE.txt" />
+    <Content Include="CashFlowCalendar\packages\list\main.css" />
+    <Content Include="CashFlowCalendar\packages\list\main.esm.js" />
+    <Content Include="CashFlowCalendar\packages\list\main.js" />
+    <Content Include="CashFlowCalendar\packages\list\main.min.css" />
+    <Content Include="CashFlowCalendar\packages\list\main.min.js" />
+    <Content Include="CashFlowCalendar\packages\luxon\LICENSE.txt" />
+    <Content Include="CashFlowCalendar\packages\luxon\main.esm.js" />
+    <Content Include="CashFlowCalendar\packages\luxon\main.js" />
+    <Content Include="CashFlowCalendar\packages\luxon\main.min.js" />
+    <Content Include="CashFlowCalendar\packages\moment-timezone\LICENSE.txt" />
+    <Content Include="CashFlowCalendar\packages\moment-timezone\main.esm.js" />
+    <Content Include="CashFlowCalendar\packages\moment-timezone\main.js" />
+    <Content Include="CashFlowCalendar\packages\moment-timezone\main.min.js" />
+    <Content Include="CashFlowCalendar\packages\moment\LICENSE.txt" />
+    <Content Include="CashFlowCalendar\packages\moment\main.esm.js" />
+    <Content Include="CashFlowCalendar\packages\moment\main.js" />
+    <Content Include="CashFlowCalendar\packages\moment\main.min.js" />
+    <Content Include="CashFlowCalendar\packages\rrule\LICENSE.txt" />
+    <Content Include="CashFlowCalendar\packages\rrule\main.esm.js" />
+    <Content Include="CashFlowCalendar\packages\rrule\main.js" />
+    <Content Include="CashFlowCalendar\packages\rrule\main.min.js" />
+    <Content Include="CashFlowCalendar\packages\timegrid\LICENSE.txt" />
+    <Content Include="CashFlowCalendar\packages\timegrid\main.css" />
+    <Content Include="CashFlowCalendar\packages\timegrid\main.esm.js" />
+    <Content Include="CashFlowCalendar\packages\timegrid\main.js" />
+    <Content Include="CashFlowCalendar\packages\timegrid\main.min.css" />
+    <Content Include="CashFlowCalendar\packages\timegrid\main.min.js" />
     <Content Include="css\fileinput.css" />
     <Content Include="css\hata.css" />
     <Content Include="css\jquery-ui.css" />
@@ -147,8 +278,6 @@
     <Content Include="css\sb-admin.min.css" />
     <Content Include="Global.asax" />
     <Content Include="images\bg-login.jpg" />
-    <Content Include="images\logo.png" />
-    <Content Include="images\main-logo.png" />
     <Content Include="js\fileinput.js" />
     <Content Include="js\jquery-ui.js" />
     <Content Include="js\sb-admin-charts.js" />
@@ -157,6 +286,23 @@
     <Content Include="js\sb-admin-datatables.min.js" />
     <Content Include="js\sb-admin.js" />
     <Content Include="js\sb-admin.min.js" />
+    <Content Include="JS_CRUD\CashFlowCRUD.js" />
+    <Content Include="JS_CRUD\FillCategoryListNewCF.js" />
+    <Content Include="JS_CRUD\FillCategoryListUpdateCF.js" />
+    <Content Include="JS_CRUD\NewCashFlow.js" />
+    <Content Include="JS_CRUD\UpdateCashFlow.js" />
+    <Content Include="newCalendar\css\fullcalendar.css" />
+    <Content Include="newCalendar\css\fullcalendar.print.css" />
+    <Content Include="newCalendar\js\fullcalendar.js" />
+    <Content Include="newCalendar\js\fullcalendar.min.js" />
+    <Content Include="newCalendar\js\lang-all.js" />
+    <Content Include="newCalendar\js\lang\tr.js" />
+    <Content Include="newCalendar\js\moment.min.js" />
+    <Content Include="Scripts\fullcalendar.js" />
+    <Content Include="Scripts\fullcalendar.min.css" />
+    <Content Include="Scripts\fullcalendar.print.css" />
+    <Content Include="Scripts\locale-tr.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="uploads\UserPicture\default_avatar_male.jpg" />
     <Content Include="vendor\bootstrap\css\bootstrap-grid.css" />
     <Content Include="vendor\bootstrap\css\bootstrap-grid.min.css" />
@@ -175,6 +321,10 @@
     <Content Include="vendor\datatables\dataTables.bootstrap4.css" />
     <Content Include="vendor\datatables\dataTables.bootstrap4.js" />
     <Content Include="vendor\datatables\jquery.dataTables.js" />
+    <Content Include="vendor\datetimepicker\bootstrap-datepicker.js" />
+    <Content Include="vendor\datetimepicker\bootstrap-datepicker.tr.js" />
+    <Content Include="vendor\datetimepicker\datepicker.css" />
+    <Content Include="vendor\datetimepicker\datepicker.js" />
     <Content Include="vendor\font-awesome\css\font-awesome.css" />
     <Content Include="vendor\font-awesome\css\font-awesome.min.css" />
     <Content Include="vendor\font-awesome\fonts\fontawesome-webfont.svg" />
@@ -207,6 +357,10 @@
     <Compile Include="Identity\IdentityDataContext.cs" />
     <Compile Include="Identity\PortalUser.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\CashFlow.cs" />
+    <Compile Include="Models\CashFlowCategories.cs" />
+    <Compile Include="Models\CashFlowItem.cs" />
+    <Compile Include="Models\CashFlowRelations.cs" />
     <Compile Include="Models\CVModel.cs" />
     <Compile Include="Models\BilgilendirmeModel.cs" />
     <Compile Include="Models\izinModel.cs" />
@@ -215,9 +369,35 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScheludedTasks\Email.cs" />
     <Compile Include="ScheludedTasks\ScheduledTasksExample.cs" />
+    <Compile Include="ViewModels\CashFlowGeneralVM.cs" />
+    <Compile Include="ViewModels\CashFlowItemViewModel.cs" />
+    <Compile Include="ViewModels\CashFlowViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
+    <Content Include="CashFlowCalendar\packages\bootstrap\package.json" />
+    <Content Include="CashFlowCalendar\packages\bootstrap\README.md" />
+    <Content Include="CashFlowCalendar\packages\core\package.json" />
+    <Content Include="CashFlowCalendar\packages\core\README.md" />
+    <Content Include="CashFlowCalendar\packages\daygrid\package.json" />
+    <Content Include="CashFlowCalendar\packages\daygrid\README.md" />
+    <Content Include="CashFlowCalendar\packages\google-calendar\package.json" />
+    <Content Include="CashFlowCalendar\packages\google-calendar\README.md" />
+    <Content Include="CashFlowCalendar\packages\interaction\package.json" />
+    <Content Include="CashFlowCalendar\packages\interaction\README.md" />
+    <Content Include="CashFlowCalendar\packages\list\package.json" />
+    <Content Include="CashFlowCalendar\packages\list\README.md" />
+    <Content Include="CashFlowCalendar\packages\luxon\package.json" />
+    <Content Include="CashFlowCalendar\packages\luxon\README.md" />
+    <Content Include="CashFlowCalendar\packages\moment-timezone\package.json" />
+    <Content Include="CashFlowCalendar\packages\moment-timezone\README.md" />
+    <Content Include="CashFlowCalendar\packages\moment\package.json" />
+    <Content Include="CashFlowCalendar\packages\moment\README.md" />
+    <Content Include="CashFlowCalendar\packages\rrule\package.json" />
+    <Content Include="CashFlowCalendar\packages\rrule\README.md" />
+    <Content Include="CashFlowCalendar\packages\timegrid\package.json" />
+    <Content Include="CashFlowCalendar\packages\timegrid\README.md" />
+    <Content Include="DBFiLE\PortalDb.bak" />
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -307,6 +487,12 @@
     <Content Include="Views\Home\BilgilendirmeGoruntule.cshtml" />
     <Content Include="Views\Admin\Bilgilendirmeler.cshtml" />
     <Content Include="Views\Admin\GenelBilgilendirmeler.cshtml" />
+    <Content Include="Views\Admin\NakitAkislari.cshtml" />
+    <Content Include="Views\Home\NakitAkisGir.cshtml" />
+    <Content Include="Views\Admin\NakitAkisiGoruntule.cshtml" />
+    <Content Include="Views\Home\CashFlowSchedule.cshtml" />
+    <Content Include="Views\Shared\_ShowCashFlowDetails.cshtml" />
+    <Content Include="Views\Shared\_NewCashFlowPage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -316,14 +502,32 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="CashFlowCalendar\files\" />
     <Folder Include="uploads\RaporPicture\" />
     <Folder Include="uploads\UploadCV\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="CashFlowCalendar\packages\bootstrap\main.d.ts" />
+    <TypeScriptCompile Include="CashFlowCalendar\packages\core\main.d.ts" />
+    <TypeScriptCompile Include="CashFlowCalendar\packages\daygrid\main.d.ts" />
+    <TypeScriptCompile Include="CashFlowCalendar\packages\google-calendar\main.d.ts" />
+    <TypeScriptCompile Include="CashFlowCalendar\packages\interaction\main.d.ts" />
+    <TypeScriptCompile Include="CashFlowCalendar\packages\list\main.d.ts" />
+    <TypeScriptCompile Include="CashFlowCalendar\packages\luxon\main.d.ts" />
+    <TypeScriptCompile Include="CashFlowCalendar\packages\moment-timezone\main.d.ts" />
+    <TypeScriptCompile Include="CashFlowCalendar\packages\moment\main.d.ts" />
+    <TypeScriptCompile Include="CashFlowCalendar\packages\rrule\main.d.ts" />
+    <TypeScriptCompile Include="CashFlowCalendar\packages\timegrid\main.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <ProjectExtensions>

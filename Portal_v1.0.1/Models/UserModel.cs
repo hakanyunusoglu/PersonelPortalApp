@@ -20,15 +20,21 @@ namespace Portal_v1._0._1.Models
     public class Register
     {
         [Required]
+        [Display(Name = "Kullanıcı adı")]
+        [StringLength(100, ErrorMessage = "{0}, en az {2} karakter uzunluğunda olmalıdır.", MinimumLength = 5)]
         public string UserName { get; set; }
 
         [Required]
         public string Mail { get; set; }
 
         [Required]
+        [Display(Name = "Şifre")]
+        [StringLength(100, ErrorMessage = "{0}, en az {2} karakter uzunluğunda olmalıdır.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Required]
+        [Compare("Password", ErrorMessage = "Şifreler eşleşmiyor!")]
         public string PasswordConfirm { get; set; }
 
         [Required]

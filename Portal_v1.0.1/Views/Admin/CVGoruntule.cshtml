@@ -47,7 +47,7 @@
                                 <td>@item.Name @item.LastName</td>
                                 <td>@item.FileName</td>
                                 <td><a href="~/uploads/UploadCV/@item.FileName">İndir</a></td>
-                                <td><form action="/Admin/DeleteCV/@item.Id" method="post"> @Html.AntiForgeryToken() <button class="btn btn-danger">Sil</button></form> </td>
+                                <td><form action="/Home/DeleteCV/@item.Id" method="post"> @Html.AntiForgeryToken() <button class="btn btn-danger">Sil</button></form> </td>
                             </tr>
                         }
                     }

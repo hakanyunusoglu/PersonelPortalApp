@@ -1,2 +1,0 @@
-# EGY-Kaldera Portal
-

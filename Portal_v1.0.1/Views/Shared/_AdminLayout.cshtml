@@ -23,10 +23,10 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark-blue fixed-top" id="mainNav">
         <div style="width:72px;" class="navbar-brand">
-            <a href="http://egybilisim.com/">
+            <a href="#">
                 <img class="myLogo" src="~/images/logo.png" id="main-logo" />
             </a>
-            <a href="http://kalderasoft.com/" class="kaldera-link">
+            <a href="#" class="link">
             </a>
         </div>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -162,7 +162,21 @@
                         </li>
                     </ul>
                 </li>
+                        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Nakit Akışı">
+                            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseNakitAkisi" data-parent="#exampleAccordion">
+                                <i class="fa fa-fw fa-link"></i>
+                                <span class="nav-link-text">Nakit Akışı</span>
+                            </a>
+                            <ul class="sidenav-second-level collapse" id="collapseNakitAkisi">
+                                <li>
+                                    <a class="nav-link" href="/Home/CashFlowSchedule">
+                                        <span class="nav-link-text">Nakit Akışı Gir/Görüntüle</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
             </ul>
+
             <ul class="navbar-nav sidenav-toggler">
                 <li class="nav-item">
                     <a class="nav-link text-center" id="sidenavToggler">
@@ -209,7 +223,7 @@
         <footer class="sticky-footer">
             <div class="container">
                 <div class="text-center">
-                    <small>Copyright © Kalderasoft Portal @DateTime.Now.Year</small>
+                    <small>Copyright © Portal @DateTime.Now.Year</small>
                 </div>
             </div>
         </footer>
